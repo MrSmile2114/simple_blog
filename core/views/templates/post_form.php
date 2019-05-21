@@ -1,5 +1,6 @@
 <?php
 $model = $data['model'];
+$categories = $data['categories'];
 $errors = $model->getErrors();
 //if(!empty($errors)){
 //    var_dump($errors);
@@ -29,8 +30,11 @@ $errors = $model->getErrors();
                         </div>
                         <div class="col-3">
                     <label for="category" class="text-info text-dark">Категория:</label><br>
-                    <select class="form-control" name="category" id="category">
-                        <option>Без категории</option>
+                    <select class="form-control custom-select" name="categoryId" id="category">
+                        <?php foreach ($categories as $category) :?>
+                            <option <?=($category['id'] == $model->categoryId) ?'selected':'' ?>
+                                    value="<?=$category['id']?>"><?=$category['title']?></option>
+                        <?php endforeach; ?>
                     </select>
                         </div>
                 </div>
@@ -46,7 +50,8 @@ $errors = $model->getErrors();
                     <textarea class="form-control" id="summernote" rows="7" name ="content"><?= (!empty($model->content)) ? htmlspecialchars($model->content) : '' ?></textarea>
                     <script>
                         $('#summernote').summernote({
-                            lang:'ru-RU'
+                            lang:'ru-RU',
+
                         });
                     </script>
                 </div>

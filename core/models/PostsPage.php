@@ -8,8 +8,8 @@ use base\BaseModel;
 use library\HttpException;
 
 class PostsPage extends BaseModel {
-    public $existNextPage = false;
-    public $existPrevPage = false;
+    public $nextPageLink;
+    public $prevPageLink;
     public $currentPage;
     public $postsData = [];
     public $postsTitle;
@@ -22,9 +22,6 @@ class PostsPage extends BaseModel {
         if((is_null($pageNumb)) or (!is_numeric($pageNumb))){
             $pageNumb=1;
         }
-        if($pageNumb>1){
-            $this->existPrevPage=true;
-        }
 
         $searchSql='';//getting additions to sql query if search is needed
         if((!is_null($searchData)) and (!empty($searchData))){
@@ -34,19 +31,23 @@ class PostsPage extends BaseModel {
             }else{
                 $searchSql=$this->search_all($searchData['value']);
             }
-
         }
+
+        $this->prevPageLink=$this->buildPrevLink($searchData,$pageNumb);
+        $this->nextPageLink=$this->buildNextLink($searchData,$pageNumb);
+
 
         $start_row = ($pageNumb-1)*$countPostsOnPage;
         $count=$countPostsOnPage+1;//11 record - shows if there are records on the next "page"
-        $sql="SELECT post.id, post.title, post.content, post.pubdate, user.id as author_id, user.login as author_name FROM post, user WHERE post.author_id = user.id {$searchSql} ORDER BY `post`.`pubdate` DESC LIMIT {$start_row},{$count}";
+        $sql="SELECT post.id, post.title, post.content, post.pubdate, user.id as author_id, user.login as author_name, category.id as category_id, category.title as category_name, category.badge_style FROM post, user, category WHERE post.author_id = user.id and post.category_id = category.id {$searchSql} ORDER BY `post`.`pubdate` DESC LIMIT {$start_row},{$count}";
         $result=$this->_db->sendQuery($sql);
         if($result->num_rows == 0){
             //todo
             //throw new HttpException('Not Found', 404);
         }
-        if ($result->num_rows == $countPostsOnPage+1) {
-            $this->existNextPage = true;
+
+        if (!($result->num_rows == $countPostsOnPage+1)) {
+            $this->nextPageLink = null;
         }
 
 
@@ -96,6 +97,29 @@ class PostsPage extends BaseModel {
         }
 
         return $res;
+    }
+
+
+
+    protected function buildNextLink($searchData, $pageNumb){
+        if(is_null($searchData) or empty($searchData)){
+            $nextPageLink="/posts/?page=".($pageNumb+1);
+        }else{
+            $nextPageLink="/posts/search/?q=".$searchData['value']."&type=".$searchData['type']."&page=".($pageNumb+1);
+        }
+        return $nextPageLink;
+    }
+
+    protected function buildPrevLink($searchData, $pageNumb){
+        if($pageNumb==1){
+            return null;
+        }
+        if(is_null($searchData) or empty($searchData)){
+            $prevPageLink="/posts/?page=".($pageNumb-1);
+        }else{
+            $prevPageLink="/posts/search/?q=".$searchData['value']."&type=".$searchData['type']."&page=".($pageNumb-1);
+        }
+        return $prevPageLink;
     }
 
 }

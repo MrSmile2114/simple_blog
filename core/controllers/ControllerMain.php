@@ -13,12 +13,11 @@ use models\RegisterForm;
 
 class ControllerMain extends Controller{
     public function actionIndex(){
-
         $model= new PostsPage(1,10);
+        $model->postsTitle="Недавно обновленные";
         $this->_view->setTitle('Главная страница');
         $this->_view->setLayout('main_sidebar');
         $this->_view->render('posts', ['model' => $model]);
-        //$this->_view->render('main', []);
     }
 
     public function actionLogin(){

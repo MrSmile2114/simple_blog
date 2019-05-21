@@ -16,4 +16,8 @@ class Request{
     public static function getPostParam($param){
         return $_POST[$param];
     }
+
+    public static function getGetParam($param){
+        return $_GET[$param];
+    }
 }

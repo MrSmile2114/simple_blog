@@ -84,13 +84,18 @@ $isGuest = \library\Auth::isGuest()
             <!-- Search Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Поиск</h5>
-                <form class="card-body" method="post">
+                <form class="card-body" method="get" action="/search.php">
                     <div class="input-group">
-                        <input name="search" type="text" class="form-control" placeholder="">
+                        <input name="q" type="search" class="form-control" placeholder="">
                         <span class="input-group-btn">
                             <button type="submit" class="btn btn-dark">Найти</button>
                         </span>
                     </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1" name="type" value="title">
+                        <label class="custom-control-label" for="customCheck1">Искать только в названии</label>
+                    </div>
+
                 </form>
             </div>
 

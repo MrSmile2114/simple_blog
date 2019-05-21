@@ -15,6 +15,10 @@ class Post extends BaseForm {
     public $author;
     public $pubDate;
 
+    public $categoryName;
+    public $categoryStyle;
+    public $categoryId;
+
     protected $_tableName='post';
 
     /**
@@ -31,7 +35,7 @@ class Post extends BaseForm {
          * Therefore, it is necessary to check the existence of the argument.
          */
         if ($id!=null){
-            $sql= "SELECT post.id, post.title, post.content, post.pubdate, user.id as author_id, user.login as author_name FROM post, user WHERE post.author_id = user.id and post.id = {$id}";
+            $sql= "SELECT post.id, post.title, post.content, post.pubdate, user.id as author_id, user.login as author_name, category.id as category_id, category.title as category_name, category.badge_style FROM post, user, category WHERE post.author_id = user.id and post.category_id = category.id and post.id = {$id}";
             $result=$this->_db->sendQuery($sql);
             if($result->num_rows == 0){
                 throw new HttpException('Not Found', 404);
@@ -45,6 +49,9 @@ class Post extends BaseForm {
                 'name' =>  htmlspecialchars($post['author_name']),
                 'id' => $post['author_id']];
             $this->pubDate=$post['pubdate'];
+            $this->categoryName=$post['category_name'];
+            $this->categoryId=$post['category_id'];
+            $this->categoryStyle=$post['badge_style'];
         }
     }
 
@@ -64,7 +71,7 @@ class Post extends BaseForm {
 
     public function create(){
         $id = Auth::getId();
-        $sql = "INSERT INTO `{$this->_tableName}` (`title`, `content`, `author_id`) VALUES ('{$this->title}', '{$this->content}', {$id})";
+        $sql = "INSERT INTO `{$this->_tableName}` (`title`, `content`, `author_id`, `category_id`) VALUES ('{$this->title}', '{$this->content}', {$id}, {$this->categoryId})";
         $this->_db->sendQuery($sql);
         $this->id = $this->_db->getLastInsertId();
         return true;
@@ -72,7 +79,7 @@ class Post extends BaseForm {
 
     public function update(){
         $current_id = Auth::getId();
-        $sql = "UPDATE {$this->_tableName} SET title = '{$this->title}', content = '{$this->content}' WHERE id = {$this->id}";
+        $sql = "UPDATE {$this->_tableName} SET title = '{$this->title}', content = '{$this->content}', category_id = {$this->categoryId} WHERE id = {$this->id}";
         $this->_db->sendQuery($sql);
         return true;
     }

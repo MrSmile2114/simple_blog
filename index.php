@@ -20,12 +20,8 @@ $controllerName = Url::getSegment(0);
 $actionName = Url::getSegment(1);
 
 //todo:реализовать проверку правил (класс URlRules) вернет [$controllerName, $actionName] в зависимости от сегментов
-//чтобы можно было posts/имя_поста
+//чтобы можно было post/имя_поста
 
-if((\library\Request::isPost()) and (\library\Request::getPostParam('search')!=null)){
-    $searchData=\library\Request::getPostParam('search');
-    header("Location: /posts/search/all/".$searchData);
-}
 
 if(is_null($controllerName)){
     $controller = 'controllers\ControllerMain';
@@ -40,8 +36,7 @@ if(is_null($actionName)){
 }
 
 try{
-    $fileName = 'core/'.str_replace('\\', '/', $controller).'.php';
-    if(!file_exists($fileName)){
+    if(!checkFile($controller)){
         throw new library\HttpException('Page not found:',404);
     }
     $controller = new $controller();

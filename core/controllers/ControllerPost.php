@@ -9,6 +9,7 @@ use library\Auth;
 use library\HttpException;
 use library\Request;
 use library\Url;
+use models\Category;
 use models\Post;
 
 class ControllerPost extends Controller
@@ -46,7 +47,8 @@ class ControllerPost extends Controller
                 }
             }
             $this->_view->setTitle('Создание поста');
-            $this->_view->render('post_form', ['model' => $model]);
+            $categories = Category::getAllCategories();
+            $this->_view->render('post_form', ['model' => $model, 'categories' => $categories]);
         } else {
             header('Location: /main/login/');
         }
@@ -71,7 +73,8 @@ class ControllerPost extends Controller
                     }
                 }
                 $this->_view->setTitle($model->title);
-                $this->_view->render('post_form', ['model' => $model]);
+                $categories = Category::getAllCategories();
+                $this->_view->render('post_form', ['model' => $model, 'categories' => $categories]);
             } else {
                 throw new HttpException('Forbidden', 403);
             }

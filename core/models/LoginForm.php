@@ -24,6 +24,7 @@ class LoginForm extends BaseForm{
         $sql="SELECT id, password, role FROM `user` WHERE login='{$login}'";
         $res = $this->_db->sendQuery($sql);
         if($res->num_rows === 0){
+            $this->_errors['login_error'] ='incorrect';
             return false;
         }else{
             $user=$res->fetch_assoc();

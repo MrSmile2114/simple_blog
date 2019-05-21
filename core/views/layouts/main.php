@@ -56,7 +56,7 @@ $isGuest = \library\Auth::isGuest()
                 </li>
                 <?php if(!$isGuest):?>
                     <li class="dropdown bg-dark navbar-dark">
-                        <a class="nav-link  dropdown-toggle" data-toggle="dropdown">
+                        <a href="" class="nav-link  dropdown-toggle" data-toggle="dropdown">
                             Привет, <?=\library\Auth::getLogin() ?>
                         </a>
                         <ul class="dropdown-menu bg-dark navbar-dark">

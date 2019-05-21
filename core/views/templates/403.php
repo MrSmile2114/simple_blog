@@ -23,16 +23,6 @@
 </div>
 <div class="bottom">
     <p class="p-404">Призрак пристально наблюдает за вами. Вас не должно здесь быть!</p>
-    <form class="search">
-        <input type="text" class="search-bar" placeholder="Search">
-        <button type="submit" class="search-btn">
-            <i class="fa fa-search"></i>
-        </button>
-    </form>
-    <div class="buttons">
-        <button class="btn">Back</button>
-        <button class="btn">Home</button>
-    </div>
 </div>
 
 <?php

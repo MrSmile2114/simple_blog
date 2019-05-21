@@ -9,10 +9,15 @@ $postData=$model->postsData;
             <small><?=$model->postsTitle ?></small>
         </h1>
         <!-- Blog Post -->
-        <?php foreach($postData as $post_num => $post):?>
+        <?php foreach($postData as $post):?>
         <div class="card mb-4">
             <div class="card-body">
-                <h2 class="card-title"><?=$post['title']?></h2>
+                <h2 class="card-title">
+                    <?php if($post['category_id']!=1): ?>
+                        <small><span class="badge <?=$post['badge_style'] ?> "><?=$post['category_name']?></span></small>
+                    <?php endif;?>
+                    <?=$post['title']?>
+                </h2>
                 <p class="card-text"><?=$post['content']?></p>
                 <a href="/post/view/<?=$post['id'] ?>" class="btn btn-primary btn-dark">Подробнее &rarr;</a>
             </div>
@@ -32,9 +37,9 @@ $postData=$model->postsData;
 
         <!-- Pagination -->
         <ul class="pagination justify-content-center mb-4">
-            <?php if ($model->existPrevPage):?>
+            <?php if (!is_null($model->prevPageLink)):?>
             <li class="page-item">
-                <a class="page-link" href="/posts/page/<?=($model->currentPage-1) ?>">&larr; Предыдущая страница</a>
+                <a class="page-link" href="<?=$model->prevPageLink?>">&larr; Предыдущая страница</a>
             </li>
             <?php else: ?>
             <li class="page-item disabled">
@@ -42,9 +47,9 @@ $postData=$model->postsData;
             </li>
             <?php endif; ?>
 
-            <?php if ($model->existNextPage):?>
+            <?php if (!is_null($model->nextPageLink)):?>
             <li class="page-item">
-                <a class="page-link" href="/posts/page/<?=($model->currentPage+1) ?>">Следующая страница &rarr;</a>
+                <a class="page-link" href="<?=$model->nextPageLink?>">Следующая страница &rarr;</a>
             </li>
             <?php else: ?>
             <li class="page-item disabled">

@@ -7,7 +7,12 @@ $model = $data['model'];
     <div class="card-header mb-auto">
         <div class="row">
             <div class="col">
-                <h2 class="card-title"><?=$model->title?></h2>
+                <h2 class="card-title">
+                    <?php if($model->categoryId!=1): ?>
+                        <span class="badge <?=$model->categoryStyle ?> "><?=$model->categoryName?></span>
+                    <?php endif;?>
+                    <?=$model->title?>
+                </h2>
             </div>
             <?php if((\library\Auth::getId()==$model->author['id']) or \library\Auth::canAccess('admin')) : ?>
             <div class="col-3">
