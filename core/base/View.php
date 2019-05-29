@@ -33,9 +33,10 @@ class View{
     /**
      * @param array $css
      */
-    public function setCss($css)
-    {
-        $this->css[] = $css;
+    public function addCss($cssArr){
+        foreach ($cssArr as $css){
+            $this->css[] = $css;
+        }
     }
 
     /**
@@ -44,5 +45,14 @@ class View{
     public function getJs()
     {
         return $this->js;
+    }
+
+    /**
+     * @param array $js
+     */
+    public function addJs($jsArr){
+        foreach ($jsArr as $js){
+            $this->js[] = $js;
+        }
     }
 }

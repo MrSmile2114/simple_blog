@@ -5,6 +5,7 @@ namespace base;
 
 
 use library\Db;
+use library\Validator;
 
 abstract class BaseModel{
     protected $_db;
@@ -19,4 +20,11 @@ abstract class BaseModel{
         return $this->_errors;
     }
 
+    public function getLocalizedErrors($lang){
+        $localeErrors=[];
+        foreach ($this->_errors as $error){
+            $localeErrors[] = Validator::getLocalizedMessage($lang,$error);
+        }
+        return $localeErrors;
+    }
 }

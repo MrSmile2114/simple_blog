@@ -75,6 +75,18 @@
     transform: rotate(45deg);
 }
 
+.mouth-sad {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    width: 10px;
+    height: 10px;
+    border: 3px solid;
+    border-radius: 50%;
+    border-color: transparent #585959 #585959 transparent;
+    transform: rotate(225deg);
+}
+
 .one, .two, .three, .four {
     position: absolute;
     background: #EDEDED;

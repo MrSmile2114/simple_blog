@@ -19,6 +19,8 @@ class Post extends BaseForm {
     public $categoryStyle;
     public $categoryId;
 
+    public $comments = [];
+
     protected $_tableName='post';
 
     /**
@@ -34,7 +36,7 @@ class Post extends BaseForm {
          * ¯\_(ツ)_/¯ so with Post() this constructor will be called, not the parent constructor.
          * Therefore, it is necessary to check the existence of the argument.
          */
-        if ($id!=null){
+        if (($id!=null) and is_numeric($id)){
             $sql= "SELECT post.id, post.title, post.content, post.pubdate, user.id as author_id, user.login as author_name, category.id as category_id, category.title as category_name, category.badge_style FROM post, user, category WHERE post.author_id = user.id and post.category_id = category.id and post.id = {$id}";
             $result=$this->_db->sendQuery($sql);
             if($result->num_rows == 0){
@@ -52,6 +54,8 @@ class Post extends BaseForm {
             $this->categoryName=$post['category_name'];
             $this->categoryId=$post['category_id'];
             $this->categoryStyle=$post['badge_style'];
+
+            $this->comments=Comment::getAllComments($id);
         }
     }
 
@@ -64,7 +68,7 @@ class Post extends BaseForm {
      */
     public function getRules(){
         return [
-            'title' => ['requiredFill', 'trim', 'htmlSpecialChars'],
+            'title' => ['requiredFill', 'trim', 'htmlSpecialChars', 'len100'],
             'content' => ['requiredFill', 'trim', 'htmlSpecialChars']
         ];
     }

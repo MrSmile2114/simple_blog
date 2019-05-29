@@ -1,5 +1,6 @@
 <?php
 $model = $data['model'];
+$id=$model->id;
 ?>
 <!-- Post Content Column -->
 <div class="card mb-auto">
@@ -15,9 +16,9 @@ $model = $data['model'];
                 </h2>
             </div>
             <?php if((\library\Auth::getId()==$model->author['id']) or \library\Auth::canAccess('admin')) : ?>
-            <div class="col-3">
-                <a href="/post/edit/<?=$model->id?>" class="btn btn-primary  btn-dark">Редактировать</a>
-                <a href="/post/delete/<?=$model->id?>" class="btn btn-primary  btn-dark">Удалить</a>
+            <div class="col-auto">
+                <a href="/post/edit/<?=$model->id?>" class="btn btn-dark">Редактировать</a>
+                <a href="/post/delete/<?=$model->id?>" class="btn btn-danger confirmation">Удалить</a>
             </div>
             <?php endif; ?>
         </div>
@@ -37,3 +38,34 @@ $model = $data['model'];
     </div>
 </div>
 
+<!-- Comments Form -->
+<div class="card my-4">
+    <h5 class="card-header">Оставьте комментарий:</h5>
+    <?php if(!\library\Auth::isGuest()): ?>
+    <div class="card-body" id="addCommentContainer">
+        <form method="post" enctype="multipart/form-data" name="addCommentForm" id="addCommentForm" onSubmit="return false">
+            <div class="form-group">
+                <textarea class="form-control" rows="3" name="content" id="commentContent"></textarea>
+            </div>
+            <input name="postId" type="hidden" value="<?=$id?>">
+            <button id="submit" type="submit" class="btn btn-dark" onclick="addComment()">Отправить</button>
+        </form>
+    </div>
+    <?php else:?>
+    <div class="card-body" id="addCommentContainer">
+        <a href="/main/login/">Войдите</a>, чтобы оставить комментарий.
+    </div>
+    <?php endif; ?>
+</div>
+
+<!-- Single Comment -->
+
+<div class="card my-4">
+    <h5 class="card-header">Комментарии</h5>
+    <div class="card-body" id="commentsBody">
+        <?php foreach ($model->comments as $comment){
+            echo $comment->markup();
+        } ?>
+    </div>
+</div>
+<script src="/assets/js/confirmation.js"></script>

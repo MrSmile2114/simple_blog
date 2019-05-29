@@ -81,6 +81,11 @@ class PostsPage extends BaseModel {
         return "AND post.title LIKE '%{$data}%'";
     }
 
+    protected function search_category($data){
+        $data=$this->_db->getSafeData($data);
+        return "AND category.title LIKE '{$data}'";
+    }
+
 
     protected function process_title($data){
         $data=$this->_db->getSafeData($data);

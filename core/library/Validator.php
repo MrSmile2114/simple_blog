@@ -13,12 +13,14 @@ class Validator{
 
     static $_transcription_ru =[
         'requiredFill' => 'Поле обязательно для заполнения.',
-        'password' => 'Пароль должен быть больше 9 символов, обязательно использование букв разных регистров.',
+        'password' => 'Пароль должен быть больше 9 символов, обязательно использование букв разных регистров и цифр.',
         'login' => 'Логин должен быть длиной 4-16 символов и состоять из латинских букв. Запрещено использование спецсимволов.',
         'email' => 'Неправильный формат E-mail.',
         'unique' => 'Пользователь с такими данными уже зарегистрирован.',
         'confirm' => 'Пароли не совпадают.',
-        'incorrect'=> 'Неверные имя пользователя и/или пароль.'
+        'incorrect' => 'Неверные имя пользователя и/или пароль.',
+        'len100' => 'Максимальная разрешенная длина - 100 символов.',
+        'len1000' => 'Максимальная разрешенная длина - 1000 символов.'
     ];
 
     public function __construct($data, $rules){
@@ -85,6 +87,18 @@ class Validator{
     protected function confirm($field){
         if($this->_data[$field] != $this->_data[$field.'_confirm']){
             $this->addError($field, 'confirm');
+        }
+    }
+
+    protected function len100($field){
+        if(strlen($this->_data[$field])>100){
+            $this->addError($field, 'len100');
+        }
+    }
+
+    protected function len1000($field){
+        if(strlen($this->_data[$field])>1000){
+            $this->addError($field, 'len1000');
         }
     }
 

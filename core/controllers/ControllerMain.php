@@ -79,4 +79,9 @@ class ControllerMain extends Controller{
         header("HTTP/1.1 403 Forbidden");
         $this->_view->render('403', []);
     }
+
+    public function showException($data){
+        $this->_view->setTitle('Ошибка');
+        $this->_view->render('exception', ['error' => $data]);
+    }
 }

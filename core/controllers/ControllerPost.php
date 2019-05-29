@@ -30,6 +30,7 @@ class ControllerPost extends Controller
         //---------------------------------
         $model = new Post($postId);
         $this->_view->setTitle($model->title);
+        $this->_view->addJs(['comment.js']);
         $this->_view->setLayout('main');
         $this->_view->render('post_view', ['model' => $model]);
 
@@ -47,6 +48,8 @@ class ControllerPost extends Controller
                 }
             }
             $this->_view->setTitle('Создание поста');
+            $this->_view->addJs(['summernote-bs4.js', 'lang/summernote-ru-RU.js']);
+            $this->_view->addCss(['summernote-bs4.css']);
             $categories = Category::getAllCategories();
             $this->_view->render('post_form', ['model' => $model, 'categories' => $categories]);
         } else {
@@ -73,6 +76,8 @@ class ControllerPost extends Controller
                     }
                 }
                 $this->_view->setTitle($model->title);
+                $this->_view->addJs(['summernote-bs4.js', 'lang/summernote-ru-RU.js']);
+                $this->_view->addCss(['summernote-bs4.css']);
                 $categories = Category::getAllCategories();
                 $this->_view->render('post_form', ['model' => $model, 'categories' => $categories]);
             } else {
@@ -96,7 +101,11 @@ class ControllerPost extends Controller
                 if($model->delete()){
                     header('Location: /');
                 }
+            }else{
+                throw new HttpException('Forbidden', 403);
             }
+        }else {
+            header('Location: /main/login/');
         }
     }
 }

@@ -7,11 +7,7 @@ $errors = $model->getErrors();
 //}
 ?>
 
-<!-- Visual Editor -->
-<script src="/assets/js/summernote-bs4.js"></script>
-<script src="/assets/js/lang/summernote-ru-RU.js"></script>
-<link href="/assets/css/summernote-bs4.css" rel="stylesheet">
-<!-- ------------ -->
+
 
 <div class="col-lg-auto">
     <div class="container">

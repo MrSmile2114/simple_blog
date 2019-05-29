@@ -8,13 +8,7 @@ function checkFile($fileName){
     return file_exists($fileName);
 }
 
-function __autoload($className){
-    $fileName = 'core/'.str_replace('\\', '/', $className).'.php';
-    if(!file_exists($fileName)){
-        throw new Exception('Class not found: '.$className.'. Path: '.$fileName);
-    }
-    require_once $fileName;
-}
+require_once "core/autoload.php";
 
 $controllerName = Url::getSegment(0);
 $actionName = Url::getSegment(1);
@@ -53,6 +47,6 @@ try{
         $mainController->show403();
     }
 }catch (Exception $e){
-    echo "Exception: ".$e->getMessage();
-
+    $mainController = new \controllers\ControllerMain();
+    $mainController->showException($e->getMessage());
 }
