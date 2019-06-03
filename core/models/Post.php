@@ -45,10 +45,10 @@ class Post extends BaseForm {
             $post = $result->fetch_assoc();
             //todo: implements as fetch_object()
             $this->id=$post['id'];
-            $this->title=htmlspecialchars(strip_tags($post['title']));
+            $this->title=$post['title'];
             $this->content=$post['content'];
             $this->author=[
-                'name' =>  htmlspecialchars($post['author_name']),
+                'name' =>  $post['author_name'],
                 'id' => $post['author_id']];
             $this->pubDate=$post['pubdate'];
             $this->categoryName=$post['category_name'];
@@ -63,13 +63,13 @@ class Post extends BaseForm {
 
     /**
      * Must return an array, the keys must be the names of the fields,
-     * the values are the arrays of the necessary rules .
+     * the values are the arrays of the necessary rules.
      * @return array
      */
     public function getRules(){
         return [
             'title' => ['requiredFill', 'trim', 'htmlSpecialChars', 'len100'],
-            'content' => ['requiredFill', 'trim', 'htmlSpecialChars']
+            'content' => ['requiredFill','htmlSpecialChars']
         ];
     }
 
@@ -82,7 +82,6 @@ class Post extends BaseForm {
     }
 
     public function update(){
-        $current_id = Auth::getId();
         $sql = "UPDATE {$this->_tableName} SET title = '{$this->title}', content = '{$this->content}', category_id = {$this->categoryId} WHERE id = {$this->id}";
         $this->_db->sendQuery($sql);
         return true;

@@ -71,12 +71,14 @@ class ControllerMain extends Controller{
     public function show404(){
         $this->_view->setTitle('Страница не найдена');
         header("HTTP/1.1 404 Not Found");
+        $this->_view->addCss(['404.css']);
         $this->_view->render('404', []);
     }
 
     public function show403(){
         $this->_view->setTitle('Доступ запрещен');
         header("HTTP/1.1 403 Forbidden");
+        $this->_view->addCss(['404.css']);
         $this->_view->render('403', []);
     }
 

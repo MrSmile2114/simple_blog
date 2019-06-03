@@ -43,13 +43,16 @@ class Category extends BaseForm {
      */
     public function getRules(){
         return [
-            'title' => ['requiredFill', 'trim', 'htmlSpecialChars', 'unique'],
+            'title' => ['requiredFill', 'trim', 'htmlSpecialChars', 'unique', 'stripTags'],
             'style' => ['requiredFill', 'trim', 'htmlSpecialChars']
         ];
     }
 
     public function create(){
         $id = Auth::getId();
+        if(empty($this->parentId)){
+            $this->parentId=1;
+        }
         $sql = "INSERT INTO `{$this->_tableName}` (`title`, `parent_id`, `badge_style`) VALUES ('{$this->title}', {$this->parentId}, '{$this->style}')";
         $this->_db->sendQuery($sql);
         $this->id = $this->_db->getLastInsertId();

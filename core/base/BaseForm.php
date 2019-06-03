@@ -12,6 +12,7 @@ use library\Validator;
  */
 abstract class BaseForm extends BaseModel {
     protected $_validator = null;
+    protected $_data;
 
     public function __construct(){
         parent::__construct();
@@ -31,9 +32,16 @@ abstract class BaseForm extends BaseModel {
             $validator->setTable($this->_tableName);
         }
 
-        if(!$validator->validate()){
+        $valData=$validator->validate();
+        if(!$valData){
             $this->_errors = $validator->getErrors();
             return false;
+        }else{
+            //getting data from the validator and writing it to object properties:
+            foreach ($valData as $propName => $propValue){
+                $this->$propName = $propValue;
+                $this->_data[$propName] = $propValue;
+            }
         }
         return true;
     }

@@ -43,7 +43,7 @@ $errors = $model->getErrors();
                             <?=\library\Validator::getLocalizedMessage('ru', $errors['content'])?>
                         </div>
                     <?php endif;?>
-                    <textarea class="form-control" id="summernote" rows="7" name ="content"><?= (!empty($model->content)) ? htmlspecialchars($model->content) : '' ?></textarea>
+                    <textarea class="form-control" id="summernote" rows="7" name ="content"><?= (!empty($model->content)) ? $model->content : '' ?></textarea>
                     <script>
                         $('#summernote').summernote({
                             lang:'ru-RU',

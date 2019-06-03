@@ -24,7 +24,14 @@ footer {
     font-size: 0.8em;
 }
 
-
+.image-avatar{
+    position:relative;
+    overflow:hidden;
+    padding-bottom:100%;
+}
+.image-avatar img{
+    position:absolute;
+}
 .note-group-select-from-files {
     display: none;
 }

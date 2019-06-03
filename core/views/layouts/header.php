@@ -31,12 +31,12 @@ $isGuest = \library\Auth::isGuest()
 
     <!--custom page JavaScript -->
     <?php foreach ($this->js as $js): ?>
-        <script src="/assets/js/<?=$js?>"></script>
+    <script src="/assets/js/<?=$js?>"></script>
     <?php endforeach; ?>
 
     <!--custom page CSS -->
     <?php foreach ($this->css as $css): ?>
-        <link href="/assets/css/<?=$css?>" rel="stylesheet">
+    <link href="/assets/css/<?=$css?>" rel="stylesheet">
     <?php endforeach; ?>
 
 
@@ -55,20 +55,28 @@ $isGuest = \library\Auth::isGuest()
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/">Главная</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/post/create">Создать пост</a>
                 </li>
                 <?php if(!$isGuest):?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">
-                            Привет, <?=\library\Auth::getLogin() ?>
+                    <?php if(\library\Auth::canAccess('admin')): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/">Админка</a>
+                        </li>
+                    <?php endif; ?>
+                    <li class="dropdown">
+                        <a class="nav-link" href="#" data-toggle="dropdown">
+                            <div class="row">
+                                <div class="col-3"><img class="rounded-circle" src="/assets/img/avatars/<?=\library\Auth::getAvatar() ?>" alt="" height='25' width='25'></div>
+                                <div class="col-auto"><span><?=\library\Auth::getLogin()?></span></div>
+                            </div>
+
                         </a>
                         <ul class="dropdown-menu bg-dark navbar-dark">
+                            <li><a class="nav-link" href="/user/">Профиль</a></li>
                             <li><a class="nav-link" href="/main/logout/">Выход</a></li>
                         </ul>
                     </li>

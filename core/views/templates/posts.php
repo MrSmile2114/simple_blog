@@ -25,7 +25,7 @@ $postData=$model->postsData;
                     <div class="row">
                         <div class="col">
                             Автор:
-                            <a href="#"><?=$post['author_name'] ?></a>
+                            <a href="/user/view/<?=$post['author_id']?>"><?=$post['author_name'] ?></a>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-clock-o"></i> <?=$post['pubdate']?>

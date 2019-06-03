@@ -27,8 +27,10 @@ class ControllerComment extends Controller {
                 if ($model->load(Request::getPost()) and $model->validate()) {
                     $model->author['name']=Auth::getLogin();
                     $model->author['id']=Auth::getId();
-                    $model->create();
-                    echo json_encode(['status' => 1, 'html'=> $model->markup()]);
+                    $model->author['avatar']=Auth::getAvatar();
+                    if($model->create()){
+                        echo json_encode(['status' => 1, 'html'=> $model->markup()]);
+                    }
                 }else{
                     echo json_encode(['status' => 0, 'errors'=> $model->getLocalizedErrors('ru')]);
                 }
@@ -46,7 +48,7 @@ class ControllerComment extends Controller {
             $id = Url::getSegment(2);
             //---------------------------------
             if (empty($id) or !(is_numeric($id))) {
-                return false;
+                throw new HttpException('Not Found', 404);
             }
             $model = Comment::__constructFromId($id);
             if (($model->author['id'] == Auth::getId()) or (Auth::getRole() == 'admin')) {
@@ -54,7 +56,7 @@ class ControllerComment extends Controller {
                     //load the data into the model and check it
                     if ($model->load(Request::getPost()) and $model->validate()) {
                         if($model->update()){
-                            echo json_encode(['status' => 1, 'content' => $model->content]);
+                            echo json_encode(['status' => 1, 'content' => $model->content, 'model'=>$model]);
                         }
 
                     }else{

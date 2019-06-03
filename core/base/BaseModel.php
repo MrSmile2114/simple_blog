@@ -10,7 +10,6 @@ use library\Validator;
 abstract class BaseModel{
     protected $_db;
     protected $_errors = [];
-    protected $_data;
 
     public function __construct(){
         $this->_db = Db::getDb();
@@ -20,10 +19,19 @@ abstract class BaseModel{
         return $this->_errors;
     }
 
+    /**
+     * @param $errors array
+     */
+    public function addErrors($errors){
+        foreach ($errors as $key => $error){
+            $this->_errors [$key] = $error;
+        }
+    }
+
     public function getLocalizedErrors($lang){
         $localeErrors=[];
-        foreach ($this->_errors as $error){
-            $localeErrors[] = Validator::getLocalizedMessage($lang,$error);
+        foreach ($this->_errors as $key => $error){
+            $localeErrors[$key] = Validator::getLocalizedMessage($lang,$error);
         }
         return $localeErrors;
     }

@@ -34,22 +34,6 @@ class Db{
         return $this->_link->real_escape_string($data);
     }
 
-//    public function sendSelect($sql){
-//        $result = $this->_link->query($sql);
-//        if(!$result){
-//            throw new Exception($this->_link->error);
-//        }
-//
-//    }
-//
-//    public function sendIUD($sql){
-//        $result = $this->_link->query($sql);
-//        if(!$result){
-//            throw new Exception($this->_link->error);
-//        }
-//
-//    }
-
     public function sendQuery($sql){
         $result = $this->_link->query($sql);
         if(!$result){
@@ -71,21 +55,5 @@ class Db{
         return $this->_link->insert_id;
     }
 
-//    public function multiQuery($sql){
-//        $results=[];
-//        if($this->_link->multi_query($sql)){
-//            $i=0;
-//            do{
-//                $result=$this->_link->store_result();
-//                if($this->_link->errno){
-//                    throw new Exception($this->_link->error);
-//                }
-//                $results[$i] = $result;
-//                $i++;
-//            }while($this->_link->next_result());
-//            var_dump($results);
-//            return $results;
-//        }
-//        return false;
-//    }
+
 }

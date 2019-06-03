@@ -22,10 +22,11 @@ class Auth{
         }
     }
 
-    public static function login($id, $login, $role){
+    public static function login($id, $login, $role, $avatar){
         $_SESSION['user']['id']=$id;
         $_SESSION['user']['login']=$login;
         $_SESSION['user']['role']=$role;
+        $_SESSION['user']['avatar']=$avatar;
     }
 
     public static function logout(){
@@ -43,5 +44,13 @@ class Auth{
 
     public static function getRole(){
         return $_SESSION['user']['role'];
+    }
+
+    public static function getAvatar(){
+        return $_SESSION['user']['avatar'];
+    }
+
+    public static function setAvatar($avatar){
+        $_SESSION['user']['avatar'] = $avatar;
     }
 }

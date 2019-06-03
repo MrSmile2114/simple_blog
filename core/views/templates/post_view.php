@@ -24,12 +24,12 @@ $id=$model->id;
         </div>
     </div>
     <div class="card-body">
-        <p class="card-text"><?= $model->content ?></p>
+        <p class="card-text"><?=htmlspecialchars_decode($model->content)?></p>
     </div>
     <div class="card-footer text-muted">
         <div class="row">
             <div class="col">
-                Автор: <a href="#"><?= $model->author['name'] ?></a>
+                Автор: <a href="/user/view/<?=$model->author['id']?>"><?= $model->author['name'] ?></a>
             </div>
             <div class="col-3">
                 Обновлено: <?= $model->pubDate ?>

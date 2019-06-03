@@ -12,15 +12,15 @@ class Validator{
     protected $_table;
 
     static $_transcription_ru =[
-        'requiredFill' => 'Поле обязательно для заполнения.',
-        'password' => 'Пароль должен быть больше 9 символов, обязательно использование букв разных регистров и цифр.',
-        'login' => 'Логин должен быть длиной 4-16 символов и состоять из латинских букв. Запрещено использование спецсимволов.',
-        'email' => 'Неправильный формат E-mail.',
-        'unique' => 'Пользователь с такими данными уже зарегистрирован.',
-        'confirm' => 'Пароли не совпадают.',
-        'incorrect' => 'Неверные имя пользователя и/или пароль.',
-        'len100' => 'Максимальная разрешенная длина - 100 символов.',
-        'len1000' => 'Максимальная разрешенная длина - 1000 символов.'
+        'requiredFill'  => 'Поле обязательно для заполнения.',
+        'password'      => 'Пароль должен быть больше 9 символов, обязательно использование букв разных регистров и цифр.',
+        'login'         => 'Логин должен быть длиной 4-16 символов и состоять из латинских букв. Запрещено использование спецсимволов.',
+        'email'         => 'Неправильный формат E-mail.',
+        'unique'        => 'Пользователь с такими данными уже зарегистрирован.',
+        'confirm'       => 'Пароли не совпадают.',
+        'incorrect'     => 'Неверные имя пользователя и/или пароль.',
+        'len100'        => 'Максимальная разрешенная длина - 100 символов.',
+        'len1000'       => 'Максимальная разрешенная длина - 1000 символов.'
     ];
 
     public function __construct($data, $rules){
@@ -54,6 +54,10 @@ class Validator{
 
     protected function htmlSpecialChars($field){
         $this->_data[$field] = htmlspecialchars($this->_data[$field]);
+    }
+
+    protected function stripTags($field){
+        $this->_data[$field] = strip_tags($this->_data[$field]);
     }
 
     protected function login($field){
@@ -111,7 +115,7 @@ class Validator{
             }
         }
         if(empty($this->_errors)){
-            return true;
+            return $this->_data;
         }else{
             return false;
         }
@@ -123,6 +127,14 @@ class Validator{
 
     public static function getLocalizedMessage($lang, $id){
         $name= '_transcription_'.$lang;
-        return self::$$name[$id];
+        if(!property_exists(static::class,$name)){
+            $name= '_transcription_ru';
+        }
+        if(key_exists($id,self::$$name)){
+            return self::$$name[$id];
+        }else{
+            return $id;
+        }
+
     }
 }

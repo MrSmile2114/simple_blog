@@ -48,7 +48,7 @@ class RegisterForm extends BaseForm {
 //        $user = $res2[1]->fetch_assoc();
 //        var_dump($user);
         $id=$this->_db->getLastInsertId();
-        Auth::login($id, $this->login, 'user');
+        Auth::login($id, $this->login, 'user','unknown.png');
         return true;
 
     }

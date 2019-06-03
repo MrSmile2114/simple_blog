@@ -1,5 +1,3 @@
-<link href="/assets/css/404.css" rel="stylesheet">
-
 <div id="background"></div>
 <div class="top">
     <h1 class="h1-404">403</h1>

@@ -9,31 +9,35 @@ function addComment(){
         }
 
         if(msg.status){
-                $(msg.html).hide().appendTo('#commentsBody').slideDown();
+                $(msg.html.replace(/(\\)(.)/g,"$2"))//регулярочка для удаления экранирования
+                    .hide().appendTo('#commentsBody').slideDown();
                 $('#commentContent').val('');
         }else {
                 $.each(msg.errors,function(k,v){
                     $('#addCommentContainer').prepend('<div class="alert alert-danger text-info text-dark" ' +
-                        'id="comm_alert" role="alert">'+v+'</div>');
+                        'id="comm_alert" role="alert">'+v
+                        +'</div>');
                 });
         }
     }, 'json');
 }
 
 function delComment(id){
-    $.get('/comment/delete/'+id, [], function (msg) {
-        if(msg.status){
-            $('#comment_'+id).slideUp().promise().done(function () {
-                $(this).remove();
-            });
+    if(confirm("Вы уверены?")){
+        $.get('/comment/delete/'+id, [], function (msg) {
+            if(msg.status){
+                $('#comment_'+id).slideUp().promise().done(function () {
+                    $(this).remove();
+                });
 
-        }else{
-            $.each(msg.errors,function(k,v) {
-                $('#comment_' + id).append('<div class="alert alert-danger text-info text-dark" role="alert">' +
-                    v+'</div>');
-            });
-        }
-    }, 'json');
+            }else{
+                $.each(msg.errors,function(k,v) {
+                    $('#comment_' + id).append('<div class="alert alert-danger text-info text-dark" role="alert">' +
+                        v+'</div>');
+                });
+            }
+        }, 'json');
+    }
 }
 
 function editComment(id) {
@@ -64,18 +68,20 @@ function updateComment(id) {
     /* Send Form: */
 
     $.post('/comment/update/'+id,$('#update_'+id).serialize(),function(msg){
-        var alert = $('#alert_'+id);
+        var alertt = $('#alert_'+id);
 
-        if(alert.length){
-            alert.remove();
+        if(alertt.length){
+            alertt.remove();
         }
         if(msg.status){
-            $('#text_'+id).text(msg.content);
+
+            $('#text_'+id).text(msg.content.replace(/(\\)(.)/g,"$2"));//регулярочка для удаления экранирования
+
             updateCancel(id);
         }else {
             $.each(msg.errors,function(k,v){
                 $('#update_'+id).append('<div class="alert alert-danger text-info text-dark" id="alert_'+id+'"' +
-                    'role="alert">'+v+'</div>');
+                    ' role="alert">'+v+'</div>');
             });
         }
     }, 'json');

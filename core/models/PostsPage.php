@@ -86,21 +86,22 @@ class PostsPage extends BaseModel {
         return "AND category.title LIKE '{$data}'";
     }
 
-
-    protected function process_title($data){
+    protected function search_user($data){
         $data=$this->_db->getSafeData($data);
-        return strip_tags($data);
+        return "AND user.login LIKE '{$data}'";
     }
 
+
+
+
     protected function process_content($data){
-        $rawData=(strip_tags($data));
+        $rawData=(strip_tags(htmlspecialchars_decode($data)));
         if(strlen($rawData)>=PostsPage::$contentCharCount){
             $res=mb_strimwidth($rawData,0, (PostsPage::$contentCharCount));
             $res.='...';
         }else{
             $res=$rawData;
         }
-
         return $res;
     }
 
