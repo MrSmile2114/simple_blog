@@ -53,7 +53,7 @@ $id=$model->id;
     </div>
     <?php else:?>
     <div class="card-body" id="addCommentContainer">
-        <a href="/main/login/">Войдите</a>, чтобы оставить комментарий.
+        <a href="" data-toggle="modal" data-target="#modalLRForm">Авторизуйтесь</a>, чтобы оставить комментарий.
     </div>
     <?php endif; ?>
 </div>

@@ -22,7 +22,7 @@ class ControllerUser extends Controller
         if (!Auth::isGuest()) {
             header("Location: /user/view/" . Auth::getId());
         } else {
-            header("Location: /main/login");
+            throw new HttpException('Forbidden', 403);
         }
     }
 
@@ -70,7 +70,7 @@ class ControllerUser extends Controller
                 throw new HttpException('Forbidden', 403);
             }
         }else {
-            header("Location: /main/login/");
+            throw new HttpException('Forbidden', 403);
         }
     }
 
@@ -93,7 +93,7 @@ class ControllerUser extends Controller
                 throw new HttpException('Forbidden', 403);
             }
         }else {
-            header("Location: /main/login/");
+            throw new HttpException('Forbidden', 403);
         }
     }
 
@@ -124,7 +124,7 @@ class ControllerUser extends Controller
                 throw new HttpException('Forbidden', 403);
             }
         }else {
-            header("Location: /main/login/");
+            throw new HttpException('Forbidden', 403);
         }
     }
 
@@ -155,7 +155,7 @@ class ControllerUser extends Controller
                 throw new HttpException('Forbidden', 403);
             }
         }else {
-            header("Location: /main/login/");
+            throw new HttpException('Forbidden', 403);
         }
     }
 

@@ -6,6 +6,7 @@ namespace controllers;
 
 use base\Controller;
 use library\Auth;
+use library\HttpException;
 use library\Request;
 use models\LoginForm;
 use models\PostsPage;
@@ -27,15 +28,19 @@ class ControllerMain extends Controller{
                 //load the data into the model and check it
                 if($model->load(Request::getPost()) and $model->validate()){
                     if($model->login()){
-                        header('Location: /');
+                        echo json_encode(['status' => 1]);
+                    }else{
+                        echo json_encode(['status' => 0, 'errors'=> $model->getLocalizedErrors('ru')]);
                     }
+                }else {
+                    echo json_encode(['status' => 0, 'errors' => $model->getLocalizedErrors('ru')]);
                 }
+            }else{
+                throw new HttpException('Not Found', 404);
             }
-            $this->_view->setTitle('Вход');
-            $this->_view->render('login', ['model' => $model]);
+
         }else{
-            //throw new HttpException('Forbidden', 403);
-            header('Location: /');
+            throw new HttpException('Forbidden', 403);
         }
 
     }
@@ -44,8 +49,6 @@ class ControllerMain extends Controller{
         if(!Auth::isGuest()) {
             Auth::logout();
         }
-        header('Location: /');
-
     }
 
     public function actionRegister(){
@@ -55,17 +58,25 @@ class ControllerMain extends Controller{
                 //load the data into the model and check it
                 if($model->load(Request::getPost()) and $model->validate()){
                     if($model->register()){
-                        header('Location: /');
+                        echo json_encode(['status' => 1]);
+                    }else{
+                        echo json_encode(['status' => 0, 'errors'=> $model->getLocalizedErrors('ru')]);
                     }
+                }else {
+                    echo json_encode(['status' => 0, 'errors' => $model->getLocalizedErrors('ru')]);
                 }
             }
-            $this->_view->setTitle('Регистрация');
-            $this->_view->render('registration', ['model' => $model]);
 
         }else{
-            //throw new HttpException('Forbidden', 403);
-            header('Location: /');
+            throw new HttpException('Forbidden', 403);
         }
+    }
+
+    public function actionJavascriptRequired(){
+        $this->_view->setTitle('Необходим javascript');
+        $this->_view->addCss(['404.css']);
+        $this->_view->setLayout('empty');
+        $this->_view->render('javascript_required', []);
     }
 
     public function show404(){

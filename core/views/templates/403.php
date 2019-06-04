@@ -20,7 +20,11 @@
     <div class="shadow"></div>
 </div>
 <div class="bottom">
-    <p class="p-404">Призрак пристально наблюдает за вами. Вас не должно здесь быть!</p>
+    <?php if(\library\Auth::isGuest()): ?>
+        <p class="p-404"> <a href="" data-toggle="modal" data-target="#modalLRForm">Авторизуйтесь</a> для просмотра этой страницы.</p>
+    <?php else: ?>
+        <p class="p-404">Призрак пристально наблюдает за вами. Вас не должно здесь быть!</p>
+    <?php endif; ?>
 </div>
 
 <?php

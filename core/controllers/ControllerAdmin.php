@@ -27,7 +27,7 @@ class ControllerAdmin extends Controller{
                 throw new HttpException('Forbidden', 403);
             }
         }else{
-            header('Location: /main/login/');
+            throw new HttpException('Forbidden', 403);
         }
     }
 
@@ -96,7 +96,7 @@ class ControllerAdmin extends Controller{
                 throw new HttpException('Forbidden', 403);
             }
         }else{
-            header('Location: /main/login/');
+            throw new HttpException('Forbidden', 403);
         }
     }
 }

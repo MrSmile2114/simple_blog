@@ -108,3 +108,4 @@ function setAvatar(id){
         dataType: 'json'
     });
 }
+

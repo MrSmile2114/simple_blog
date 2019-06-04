@@ -1,10 +1,6 @@
-<?php
-$message = $data['error'];
-?>
 <div id="background"></div>
 <div class="top">
-    <h1 class="h1-404">500</h1>
-    <h3 class="h3-404">unexpected error</h3>
+    <h3 class="h3-404">javascript required</h3>
 </div>
 <div class="container-ghost">
     <div class="ghost-copy">
@@ -23,6 +19,5 @@ $message = $data['error'];
     <div class="shadow"></div>
 </div>
 <div class="bottom">
-    <p class="p-404">Произошла ошибка: <?=$message?></p>
+    <p class="p-404">Для работы с эти сайтом, необходимо включить javascript в браузере.</p>
 </div>
-

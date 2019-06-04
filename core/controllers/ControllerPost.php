@@ -53,7 +53,7 @@ class ControllerPost extends Controller
             $categories = Category::getAllCategories();
             $this->_view->render('post_form', ['model' => $model, 'categories' => $categories]);
         } else {
-            header('Location: /main/login/');
+            throw new HttpException('Forbidden', 403);
         }
     }
 
@@ -84,7 +84,7 @@ class ControllerPost extends Controller
                 throw new HttpException('Forbidden', 403);
             }
         } else {
-            header('Location: /main/login/');
+            throw new HttpException('Forbidden', 403);
         }
     }
 
@@ -105,7 +105,7 @@ class ControllerPost extends Controller
                 throw new HttpException('Forbidden', 403);
             }
         }else {
-            header('Location: /main/login/');
+            throw new HttpException('Forbidden', 403);
         }
     }
 }
