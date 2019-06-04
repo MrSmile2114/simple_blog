@@ -162,20 +162,20 @@ $isGuest = \library\Auth::isGuest()
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="text-info text-dark">Пароль:</label><br>
+                                    <label for="password" class="text-info text-dark"><i class="fa fa-lock mr-1"></i>Пароль:</label><br>
                                     <input type="password" name="password" class="form-control" id="reg_password"
                                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[0-9a-zA-Z!@#$%^&*]{9,}"
                                            data-pattern-error="Пароль должен быть больше 9 символов, обязательно использование букв разных регистров и цифр" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password_confirm" class="text-info text-dark">Подтверждение пароля:</label><br>
+                                    <label for="password_confirm" class="text-info text-dark"><i class="fa fa-lock mr-1"></i>Подтверждение пароля:</label><br>
                                     <input type="password" name="password_confirm" class="form-control" id="reg_password_confirm" data-match="#reg_password"
                                            data-match-error="Пароли не совпадают" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email" class="text-info text-dark">Email:</label><br>
+                                    <label for="email" class="text-info text-dark"><i class="fa fa-envelope mr-1"></i>Email:</label><br>
                                     <input type="email" name="email" class="form-control"
                                            data-remote="/validator/email/" required>
                                     <div class="help-block with-errors"></div>
