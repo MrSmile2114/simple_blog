@@ -47,7 +47,11 @@ class ControllerMain extends Controller{
 
     public function actionLogout(){
         if(!Auth::isGuest()) {
-            Auth::logout();
+            if(Auth::logout()){
+                echo json_encode(['status' => 1]);
+            }else{
+                echo json_encode(['status' => 0]);
+            }
         }
     }
 

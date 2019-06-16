@@ -81,7 +81,7 @@ $isGuest = \library\Auth::isGuest()
                         </a>
                         <ul class="dropdown-menu bg-dark navbar-dark">
                             <li><a class="nav-link" href="/user/">Профиль</a></li>
-                            <li><a class="nav-link" href="" onclick="logout()">Выход</a></li>
+                            <li><a id="logout" class="nav-link" href="">Выход</a></li>
                         </ul>
                     </li>
                 <?php else : ?>

@@ -1,54 +1,63 @@
 $(document).ready(function () {
+    $('#reg_form').validator().on('submit', function (e) {
+        if (e.isDefaultPrevented()) {
+            // handle the invalid form...
+        } else {
+            // Prevent form submission which refreshes page
+            e.preventDefault();
 
-    $('#login_form').submit(function (e) {
+            // Serialize data
+            var formData = $(this).serialize();
 
-        // Prevent form submission which refreshes page
-        e.preventDefault();
+            $.post('/main/register/',formData, function (msg) {
 
+                if(msg.status){
+                    location.reload();
+                }else{
 
-        var formData = $(this).serialize();
+                }
 
-        $.post('/main/login/',formData, function (msg) {
-
-            if(msg.status){
-                location.reload();
-            }else{
-
-                $.each(msg.errors,function(k,v){
-                    if(k==='login_error'){
-                        $('<div class="alert alert-danger text-info text-dark" id="alert" role="alert">'+v+'</div>')
-                            .hide().prependTo('#login_form').slideDown();
-                    }else{
-
-                    }
-                });
-            }
-
-        }, 'json');
-
+            }, 'json');
+        }
     });
 
-    $('#reg_form').submit(function (e) {
+    $('#login_form').validator().on('submit', function (e) {
+        if (e.isDefaultPrevented()) {
+            // handle the invalid form...
+        } else {
+            // Prevent form submission which refreshes page
+            e.preventDefault();
+            var formData = $(this).serialize();
 
-        // Prevent form submission which refreshes page
+            $.post('/main/login/',formData, function (msg) {
+
+                if(msg.status){
+                    location.reload();
+                }else{
+                    $.each(msg.errors,function(k,v){
+                        if(k==='login_error'){
+                            $('#alert').remove();
+                            $('<div class="alert alert-danger text-info text-dark" id="alert" role="alert">'+v+'</div>')
+                                .hide().prependTo('#login_form').slideDown();
+                        }else{
+
+                        }
+                    });
+                }
+
+            }, 'json');
+        }
+        });
+
+
+    $("#logout").on('click', function (e) {
         e.preventDefault();
-
-        // Serialize data
-        var formData = $(this).serialize();
-
-        $.post('/main/register/',formData, function (msg) {
-
+        $.get('/main/logout/',[], function (msg) {
             if(msg.status){
                 location.reload();
             }else{
 
             }
-
         }, 'json');
     });
 });
-
-function logout(){
-    $.get('/main/logout/',[]);
-    location.reload();
-}

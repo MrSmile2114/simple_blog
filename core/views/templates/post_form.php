@@ -2,9 +2,6 @@
 $model = $data['model'];
 $categories = $data['categories'];
 $errors = $model->getErrors();
-//if(!empty($errors)){
-//    var_dump($errors);
-//}
 ?>
 
 
@@ -47,6 +44,18 @@ $errors = $model->getErrors();
                     <script>
                         $('#summernote').summernote({
                             lang:'ru-RU',
+                            toolbar: [
+                                ['style', ['style']],
+                                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript' ,'clear']],
+                                ['fontname', ['fontname']],
+                                ['color', ['color']],
+                                ['para', ['ul', 'ol', 'paragraph']],
+                                ['height', ['height']],
+                                ['table', ['table']],
+                                ['insert', ['link', 'picture', 'hr']],
+                                ['view', ['fullscreen', 'codeview']],
+                                ['help', ['help']]
+                            ]
 
                         });
                     </script>

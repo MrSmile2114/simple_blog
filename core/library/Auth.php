@@ -32,6 +32,7 @@ class Auth{
     public static function logout(){
         session_unset();
         session_destroy();
+        return true;
     }
 
     public static function getLogin(){
