@@ -13,3 +13,5 @@ gen
 assets/img/avatars/
 #db config
 core/config/db.php
+#captcha config
+core/config/captcha.php

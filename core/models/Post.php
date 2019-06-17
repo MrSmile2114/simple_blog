@@ -37,7 +37,7 @@ class Post extends BaseForm {
          * Therefore, it is necessary to check the existence of the argument.
          */
         if (($id!=null) and is_numeric($id)){
-            $sql= "SELECT post.id, post.title, post.content, post.pubdate, user.id as author_id, user.login as author_name, category.id as category_id, category.title as category_name, category.badge_style FROM post, user, category WHERE post.author_id = user.id and post.category_id = category.id and post.id = {$id}";
+            $sql= "SELECT post.id, post.title, post.content, post.pubdate, user.id as author_id, user.login as author_name, user.avatar as author_avatar, category.id as category_id, category.title as category_name, category.badge_style FROM post, user, category WHERE post.author_id = user.id and post.category_id = category.id and post.id = {$id}";
             $result=$this->_db->sendQuery($sql);
             if($result->num_rows == 0){
                 throw new HttpException('Not Found', 404);
@@ -49,7 +49,8 @@ class Post extends BaseForm {
             $this->content=$post['content'];
             $this->author=[
                 'name' =>  $post['author_name'],
-                'id' => $post['author_id']];
+                'id' => $post['author_id'],
+                'avatar'=>$post['author_avatar']];
             $this->pubDate=$post['pubdate'];
             $this->categoryName=$post['category_name'];
             $this->categoryId=$post['category_id'];

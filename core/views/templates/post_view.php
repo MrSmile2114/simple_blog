@@ -29,9 +29,10 @@ $id=$model->id;
     <div class="card-footer text-muted">
         <div class="row">
             <div class="col">
-                Автор: <a href="/user/view/<?=$model->author['id']?>"><?= $model->author['name'] ?></a>
+                Автор:<a href="/user/view/<?=$model->author['id']?>"><img class="rounded-circle" src="/assets/img/avatars/<?=$model->author['avatar']?>" alt="" height='25' width='25'> <?= $model->author['name'] ?>
+                </a>
             </div>
-            <div class="col-3">
+            <div class="col-auto">
                 Обновлено: <?= $model->pubDate ?>
             </div>
         </div>

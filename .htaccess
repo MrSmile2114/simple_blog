@@ -10,10 +10,7 @@
 </Files>
 addDefaultCharset utf-8
 
-AuthType Basic
-AuthName "Protected"
-AuthUserFile /etc/phpmyadmin/.htpasswd
-Require valid-user
+
 
 RewriteEngine On
 

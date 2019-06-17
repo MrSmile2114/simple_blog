@@ -99,6 +99,7 @@ class ControllerMain extends Controller{
 
     public function showException($data){
         $this->_view->setTitle('Ошибка');
+        $this->_view->addCss(['404.css']);
         $this->_view->render('exception', ['error' => $data]);
     }
 }

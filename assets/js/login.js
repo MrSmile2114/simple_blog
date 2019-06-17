@@ -3,21 +3,27 @@ $(document).ready(function () {
         if (e.isDefaultPrevented()) {
             // handle the invalid form...
         } else {
-            // Prevent form submission which refreshes page
-            e.preventDefault();
+            var recaptcha = $("#g-recaptcha-response").val();
+            if (recaptcha === "") {
+                e.preventDefault();
+                alert("Please check the recaptcha");
+            }else{
+                // Prevent form submission which refreshes page
+                e.preventDefault();
 
-            // Serialize data
-            var formData = $(this).serialize();
+                // Serialize data
+                var formData = $(this).serialize();
 
-            $.post('/main/register/',formData, function (msg) {
+                $.post('/main/register/',formData, function (msg) {
 
-                if(msg.status){
-                    location.reload();
-                }else{
+                    if(msg.status){
+                        location.reload();
+                    }else{
 
-                }
+                    }
 
-            }, 'json');
+                }, 'json');
+            }
         }
     });
 

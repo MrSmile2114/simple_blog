@@ -30,7 +30,9 @@ $isGuest = \library\Auth::isGuest()
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
 
+
     <script src="/assets/js/plugin/validator.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="/assets/js/login.js"></script>
 
     <!--custom page JavaScript -->
@@ -179,6 +181,9 @@ $isGuest = \library\Auth::isGuest()
                                     <input type="email" name="email" class="form-control"
                                            data-remote="/validator/email/" required>
                                     <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="g-recaptcha" data-sitekey="6LegVKkUAAAAAH_TtnkJdAy25WejAM3KuQry17VG"></div>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-dark btn-block" value="Регистрация">
