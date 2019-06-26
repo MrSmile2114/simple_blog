@@ -70,7 +70,7 @@ class Post extends BaseForm {
     public function getRules(){
         return [
             'title' => ['requiredFill', 'trim', 'htmlSpecialChars', 'len100'],
-            'content' => ['requiredFill','htmlSpecialChars']
+            'content' => ['requiredFill','htmlPurify','htmlSpecialChars']
         ];
     }
 

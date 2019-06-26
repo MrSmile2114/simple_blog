@@ -1,24 +1,36 @@
-function passwordUpdate(id){
-    $.post('/user/passwordUpdate/'+id, $('#password_form').serialize(), function(msg){
+$(document).ready(function () {
+    $('#password_form').validator().on('submit', function (e) {
+        if (e.isDefaultPrevented()) {
+            // handle the invalid form...
+        } else {
+            e.preventDefault();
+            var formAction = $(this).attr("action");
+            var formData = $(this).serialize();
+            var alert = $('#alert');
+            if (alert.length) {
+                alert.remove();
+            }
+            $.post(formAction, formData, function (msg) {
+                if (msg.status) {
+                    $('<div class="alert alert-success text-info text-dark" id="alert" >' + msg.message + '</div>')
+                        .hide().prependTo('#password').slideDown();
+                } else {
+                    $.each(msg.errors, function (k, v) {
+                        if(k==='login_error'){
+                            $('#password').prepend('<div class="alert alert-danger text-info text-dark" ' +
+                                'id="alert" role="alert">' + v + '</div>');
+                        }else{
 
-        var alert = $('#alert');
+                        }
 
-        if(alert.length){
-            alert.remove();
+                    });
+                }
+            }, 'json');
+
         }
+    });
+});
 
-        if(msg.status){
-            $('<div class="alert alert-success text-info text-dark" id="alert" >'+msg.message+'</div>')
-                .hide().prependTo('#password').slideDown();
-        }else {
-            $.each(msg.errors,function(k,v){
-                $('#password').prepend('<div class="alert alert-danger text-info text-dark" ' +
-                    'id="alert" role="alert">'+k+': '+v
-                    +'</div>');
-            });
-        }
-    }, 'json');
-}
 
 function editUser(id) {
     var tableInfo =$('#table_info');

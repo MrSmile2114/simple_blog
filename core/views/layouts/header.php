@@ -96,6 +96,7 @@ $isGuest = \library\Auth::isGuest()
     </div>
 </nav>
 
+<?php if($isGuest):?>
 <!--Modal: Login / Register Form-->
 <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document">
@@ -164,14 +165,14 @@ $isGuest = \library\Auth::isGuest()
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="text-info text-dark"><i class="fa fa-lock mr-1"></i>Пароль:</label><br>
+                                    <label for="reg_password" class="text-info text-dark"><i class="fa fa-lock mr-1"></i>Пароль:</label><br>
                                     <input type="password" name="password" class="form-control" id="reg_password"
                                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[0-9a-zA-Z!@#$%^&*]{9,}"
                                            data-pattern-error="Пароль должен быть больше 9 символов, обязательно использование букв разных регистров и цифр" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password_confirm" class="text-info text-dark"><i class="fa fa-lock mr-1"></i>Подтверждение пароля:</label><br>
+                                    <label for="reg_password_confirm" class="text-info text-dark"><i class="fa fa-lock mr-1"></i>Подтверждение пароля:</label><br>
                                     <input type="password" name="password_confirm" class="form-control" id="reg_password_confirm" data-match="#reg_password"
                                            data-match-error="Пароли не совпадают" required>
                                     <div class="help-block with-errors"></div>
@@ -203,3 +204,4 @@ $isGuest = \library\Auth::isGuest()
     <!--/.Content-->
 </div>
 <!--Modal: Login / Register Form-->
+<?php endif;?>

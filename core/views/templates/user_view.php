@@ -67,21 +67,27 @@ $errors = $model->getErrors();;
                             <?php if((\library\Auth::getId()==$model->id)):?>
                             <div class="tab-pane fade" id="password">
                                 <p></p>
-                                <form id="password_form" role="form" method="post" action="/user/passwordUpdate/<?=$model->id?>" onSubmit="return false">
+                                <form id="password_form" data-toggle="validator" role="form" method="post" action="/user/passwordUpdate/<?=$model->id?>">
                                     <div class="form-group">
-                                        <label>Текущий пароль:</label>
-                                        <input name="password" type="password" class="form-control rounded">
+                                        <label for="password">Текущий пароль:</label>
+                                        <input id="password" name="password" type="password" class="form-control rounded" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[0-9a-zA-Z!@#$%^&*]{9,}"
+                                               data-pattern-error="Пароль должен быть больше 9 символов, обязательно использование букв разных регистров и цифр" required>
+                                        <div class="help-block with-errors"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Новый пароль:</label>
-                                        <input name="password_new" type="password" class="form-control rounded">
+                                        <label for="password_new">Новый пароль:</label>
+                                        <input id="password_new" name="password_new" type="password" class="form-control rounded" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[0-9a-zA-Z!@#$%^&*]{9,}"
+                                               data-pattern-error="Пароль должен быть больше 9 символов, обязательно использование букв разных регистров и цифр" required>
+                                        <div class="help-block with-errors"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Подтверждение пароля:</label>
-                                        <input name="password_new_confirm" type="password" class="form-control rounded">
+                                        <label for="password_conf">Подтверждение пароля:</label>
+                                        <input id="password_conf" name="password_new_confirm" type="password" class="form-control rounded" data-match="#password_new"
+                                               data-match-error="Пароли не совпадают" required>
+                                        <div class="help-block with-errors"></div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-dark" onclick="passwordUpdate(<?=$model->id?>)" data-original-title="" title="">Отправить</button>
+                                        <button type="submit" class="btn btn-dark" data-original-title="" title="">Отправить</button>
                                     </div>
                                 </form>
                             </div>
