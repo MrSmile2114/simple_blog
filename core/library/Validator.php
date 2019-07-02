@@ -60,12 +60,6 @@ class Validator{
         $this->_data[$field] = strip_tags($this->_data[$field]);
     }
 
-    protected function htmlPurify($field){
-        require_once __DIR__."/purifier/HTMLPurifier.auto.php";
-        $cfg = \HTMLPurifier_Config::createDefault();
-        $purifier = new \HTMLPurifier($cfg);
-        $this->_data[$field] = $purifier->purify($this->_data[$field]);
-    }
 
     protected function login($field){
         //login pattern: 4-16 length

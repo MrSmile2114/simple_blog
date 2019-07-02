@@ -68,6 +68,11 @@ class ControllerPost extends Controller
             $model = new Post($postId);
             if (($model->author['id'] == Auth::getId()) or (Auth::getRole() == 'admin')) {
                 if (Request::isPost()) {
+                    //we must clean up before mysql_real_escape_string :C
+                    require_once __DIR__."/../library/purifier/HTMLPurifier.auto.php";
+                    $cfg = \HTMLPurifier_Config::createDefault();
+                    $purifier = new \HTMLPurifier($cfg);
+                    Request::setPostParam('content',$purifier->purify(Request::getPostParam('content')));
                     //load the data into the model and check it
                     if ($model->load(Request::getPost()) and $model->validate()) {
                         if ($model->update()) {
