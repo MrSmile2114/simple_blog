@@ -24,7 +24,10 @@ class Comment extends BaseForm{
      * @return array
      */
     public function getRules(){
-       return [ 'content' => ['requiredFill', 'trim', 'htmlSpecialChars'] ];
+       return [
+           'content' => ['requiredFill', 'trim', 'htmlSpecialChars'] ,
+           'postId' =>  []
+       ];
     }
 
     /**

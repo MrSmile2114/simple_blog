@@ -107,6 +107,14 @@ class Validator{
         }
     }
 
+    protected function isInteger($field){
+        $data=0+$this->_data[$field];
+        if(!is_int($data)){
+            $this->addError($field, 'isInteger');
+        }
+    }
+
+
     public function validate(){
         foreach ($this->_rules as $field => $rules){
             foreach ($rules as $ruleName) {

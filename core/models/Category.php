@@ -43,8 +43,9 @@ class Category extends BaseForm {
      */
     public function getRules(){
         return [
-            'title' => ['requiredFill', 'trim', 'htmlSpecialChars', 'unique', 'stripTags'],
-            'style' => ['requiredFill', 'trim', 'htmlSpecialChars']
+            'title' =>      ['requiredFill', 'trim', 'htmlSpecialChars', 'unique', 'stripTags'],
+            'style' =>      ['requiredFill', 'trim', 'htmlSpecialChars'],
+            'parentId' =>   []
         ];
     }
 

@@ -49,10 +49,14 @@ abstract class BaseForm extends BaseModel {
     public function load($data){
         foreach($data as $propName => $propValue){
             if(property_exists(static::class, $propName)){
-                //shield the symbols:
-                $propValue = $this->_db->getSafeData($propValue);
-                $this->$propName = $propValue;
-                $this->_data[$propName] = $propValue;
+                $rules=$this->getRules();
+                //add to the model only the data that is in the rules to prevent injections:
+                if(array_key_exists($propName, $rules)) {
+                    //shield the symbols:
+                    $propValue = $this->_db->getSafeData($propValue);
+                    $this->$propName = $propValue;
+                    $this->_data[$propName] = $propValue;
+                }
 //            }else{
 ////                return false;
             }

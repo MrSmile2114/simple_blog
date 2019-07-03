@@ -41,7 +41,8 @@ class User extends BaseForm {
                 'email' =>                  ['requiredFill', 'email', 'trim', 'htmlSpecialChars'],
                 'sex' =>                    ['requiredFill', 'trim', 'htmlSpecialChars', 'len100'],
                 'name' =>                   ['trim', 'htmlSpecialChars', 'len100'],
-                'city' =>                   ['trim', 'htmlSpecialChars', 'len100']
+                'city' =>                   ['trim', 'htmlSpecialChars', 'len100'],
+                'avatarPath'=>              []
             ];
         }else{
             return [

@@ -48,7 +48,7 @@ class RegisterForm extends BaseForm {
                     $this->_errors['register'] = 'DB Error!';
                     return false;
                 }
-                $id=$this->_db->getLastInsertId();
+                    $id=$this->_db->getLastInsertId();
                 Auth::login($id, $this->login, 'user','unknown.png');
                 return true;
             }else{
