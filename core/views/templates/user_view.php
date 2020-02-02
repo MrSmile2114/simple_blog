@@ -1,14 +1,14 @@
 <?php
 $model = $data['model'];
-$errors = $model->getErrors();;
+$errors = $model->getErrors();
 ?>
 <div class="container">
     <div id="main">
-        <?php foreach ($errors as $key => $error): ?>
+        <?php foreach ($errors as $key => $error) { ?>
         <div class="alert alert-danger text-info text-dark" role="alert">
-            <?=$key.": ".$error?>
+            <?=$key.': '.$error?>
         </div>
-        <?php endforeach;?>
+        <?php }?>
 
         <div class="row" id="real-estates-detail">
             <div class="col-lg-4 col-md-4 col-xs-12">
@@ -39,12 +39,12 @@ $errors = $model->getErrors();;
                     <div class="card-body">
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active"><a class="nav-link active" data-toggle="tab" href="#detail">О пользователе</a></li>
-                            <?php if((\library\Auth::getId()==$model->id)):?>
+                            <?php if ((\library\Auth::getId() == $model->id)) { ?>
                             <li class=""><a class="nav-link" data-toggle="tab" href="#password">Изменить пароль</a></li>
-                            <?php endif; ?>
-                            <?php if((\library\Auth::getId()==$model->id)or(\library\Auth::canAccess('admin'))):?>
+                            <?php } ?>
+                            <?php if ((\library\Auth::getId() == $model->id) or (\library\Auth::canAccess('admin'))) { ?>
                             <li class=""><a class="nav-link" data-toggle="tab" href="#avatar">Аватар</a></li>
-                            <?php endif; ?>
+                            <?php } ?>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade show active" id="detail">
@@ -58,13 +58,13 @@ $errors = $model->getErrors();;
                                     <tr><td class="active">Пол:</td><td id="td_sex"><?=$model->sex?></td></tr>
                                     </tbody>
                                 </table>
-                                <?php if((\library\Auth::getId()==$model->id)or(\library\Auth::canAccess('admin'))):?>
+                                <?php if ((\library\Auth::getId() == $model->id) or (\library\Auth::canAccess('admin'))) { ?>
                                 <div id="edit_btn"><button class="btn btn-dark" onclick="editUser(<?=$model->id?>)">Редактировать</button></div>
-                                <?php endif; ?>
+                                <?php } ?>
                                 <p></p>
                                 <a href='/posts/search/?q=<?=$model->login?>&type=user'>Найти посты пользователя</a>
                             </div>
-                            <?php if((\library\Auth::getId()==$model->id)):?>
+                            <?php if ((\library\Auth::getId() == $model->id)) { ?>
                             <div class="tab-pane fade" id="password">
                                 <p></p>
                                 <form id="password_form" data-toggle="validator" role="form" method="post" action="/user/passwordUpdate/<?=$model->id?>">
@@ -91,8 +91,8 @@ $errors = $model->getErrors();;
                                     </div>
                                 </form>
                             </div>
-                            <?php endif; ?>
-                            <?php if((\library\Auth::getId()==$model->id)or(\library\Auth::canAccess('admin'))):?>
+                            <?php } ?>
+                            <?php if ((\library\Auth::getId() == $model->id) or (\library\Auth::canAccess('admin'))) { ?>
                             <div class="tab-pane fade" id="avatar">
                                 <p></p>
                                 <form role="form" method="post" id="avatar_form" enctype="multipart/form-data" action="/user/avatarSet/<?=$model->id?>">
@@ -106,7 +106,7 @@ $errors = $model->getErrors();;
                                 </form>
                                 <a href="/user/avatarDelete/<?=$model->id?>" class="btn btn-danger confirmation" >Удалить Аватар</a>
                             </div>
-                            <?php endif; ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

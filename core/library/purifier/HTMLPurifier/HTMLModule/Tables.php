@@ -6,7 +6,7 @@
 class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tables';
 
@@ -22,33 +22,33 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
             'Block',
             new HTMLPurifier_ChildDef_Table(),
             'Common',
-            array(
-                'border' => 'Pixels',
+            [
+                'border'      => 'Pixels',
                 'cellpadding' => 'Length',
                 'cellspacing' => 'Length',
-                'frame' => 'Enum#void,above,below,hsides,lhs,rhs,vsides,box,border',
-                'rules' => 'Enum#none,groups,rows,cols,all',
-                'summary' => 'Text',
-                'width' => 'Length'
-            )
+                'frame'       => 'Enum#void,above,below,hsides,lhs,rhs,vsides,box,border',
+                'rules'       => 'Enum#none,groups,rows,cols,all',
+                'summary'     => 'Text',
+                'width'       => 'Length',
+            ]
         );
 
         // common attributes
-        $cell_align = array(
-            'align' => 'Enum#left,center,right,justify,char',
+        $cell_align = [
+            'align'   => 'Enum#left,center,right,justify,char',
             'charoff' => 'Length',
-            'valign' => 'Enum#top,middle,bottom,baseline',
-        );
+            'valign'  => 'Enum#top,middle,bottom,baseline',
+        ];
 
         $cell_t = array_merge(
-            array(
-                'abbr' => 'Text',
+            [
+                'abbr'    => 'Text',
                 'colspan' => 'Number',
                 'rowspan' => 'Number',
                 // Apparently, as of HTML5 this attribute only applies
                 // to 'th' elements.
                 'scope' => 'Enum#row,col,rowgroup,colgroup',
-            ),
+            ],
             $cell_align
         );
         $this->addElement('td', false, 'Flow', 'Common', $cell_t);
@@ -57,10 +57,10 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
         $this->addElement('tr', false, 'Required: td | th', 'Common', $cell_align);
 
         $cell_col = array_merge(
-            array(
-                'span' => 'Number',
+            [
+                'span'  => 'Number',
                 'width' => 'MultiLength',
-            ),
+            ],
             $cell_align
         );
         $this->addElement('col', false, 'Empty', 'Common', $cell_col);

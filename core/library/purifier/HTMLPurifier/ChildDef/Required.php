@@ -7,13 +7,15 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
 {
     /**
      * Lookup table of allowed elements.
-     * @type array
+     *
+     * @var array
      */
-    public $elements = array();
+    public $elements = [];
 
     /**
      * Whether or not the last passed node was all whitespace.
-     * @type bool
+     *
+     * @var bool
      */
     protected $whitespace = false;
 
@@ -40,19 +42,20 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @type bool
+     * @var bool
      */
     public $allow_empty = false;
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'required';
 
     /**
-     * @param array $children
-     * @param HTMLPurifier_Config $config
+     * @param array                $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function validateChildren($children, $config, $context)
@@ -66,7 +69,7 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
         }
 
         // the new set of children
-        $result = array();
+        $result = [];
 
         // whether or not parsed character data is allowed
         // this controls whether or not we silently drop a tag
@@ -109,8 +112,10 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
         }
         if ($all_whitespace) {
             $this->whitespace = true;
+
             return false;
         }
+
         return $result;
     }
 }

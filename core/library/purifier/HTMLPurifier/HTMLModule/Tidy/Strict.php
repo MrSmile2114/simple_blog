@@ -3,12 +3,12 @@
 class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy_Strict';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'light';
 
@@ -19,16 +19,18 @@ class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_X
     {
         $r = parent::makeFixes();
         $r['blockquote#content_model_type'] = 'strictblockquote';
+
         return $r;
     }
 
     /**
-     * @type bool
+     * @var bool
      */
     public $defines_child_def = true;
 
     /**
      * @param HTMLPurifier_ElementDef $def
+     *
      * @return HTMLPurifier_ChildDef_StrictBlockquote
      */
     public function getChildDef($def)
@@ -36,6 +38,7 @@ class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_X
         if ($def->content_model_type != 'strictblockquote') {
             return parent::getChildDef($def);
         }
+
         return new HTMLPurifier_ChildDef_StrictBlockquote($def->content_model);
     }
 }

@@ -36,14 +36,14 @@ $isGuest = \library\Auth::isGuest()
     <script src="/assets/js/login.js"></script>
 
     <!--custom page JavaScript -->
-    <?php foreach ($this->js as $js): ?>
+    <?php foreach ($this->js as $js) { ?>
     <script src="/assets/js/<?=$js?>"></script>
-    <?php endforeach; ?>
+    <?php } ?>
 
     <!--custom page CSS -->
-    <?php foreach ($this->css as $css): ?>
+    <?php foreach ($this->css as $css) { ?>
     <link href="/assets/css/<?=$css?>" rel="stylesheet">
-    <?php endforeach; ?>
+    <?php } ?>
 
 
 
@@ -67,12 +67,12 @@ $isGuest = \library\Auth::isGuest()
                 <li class="nav-item">
                     <a class="nav-link" href="/post/create">Создать пост</a>
                 </li>
-                <?php if(!$isGuest):?>
-                    <?php if(\library\Auth::canAccess('admin')): ?>
+                <?php if (!$isGuest) { ?>
+                    <?php if (\library\Auth::canAccess('admin')) { ?>
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/">Админка</a>
                         </li>
-                    <?php endif; ?>
+                    <?php } ?>
                     <li class="dropdown">
                         <a class="nav-link" href="#" data-toggle="dropdown">
                             <div class="row">
@@ -86,17 +86,17 @@ $isGuest = \library\Auth::isGuest()
                             <li><a id="logout" class="nav-link" href="">Выход</a></li>
                         </ul>
                     </li>
-                <?php else : ?>
+                <?php } else { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="" data-toggle="modal" data-target="#modalLRForm">Вход</a>
                     </li>
-                <?php endif; ?>
+                <?php } ?>
             </ul>
         </div>
     </div>
 </nav>
 
-<?php if($isGuest):?>
+<?php if ($isGuest) { ?>
 <!--Modal: Login / Register Form-->
 <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document">
@@ -204,4 +204,4 @@ $isGuest = \library\Auth::isGuest()
     <!--/.Content-->
 </div>
 <!--Modal: Login / Register Form-->
-<?php endif;?>
+<?php }?>

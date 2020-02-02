@@ -11,27 +11,28 @@ INSIDE HTML PURIFIER DOCUMENTS. USE ONLY WITH TRUSTED USER INPUT!!!
  * XHTML 1.1 Scripting module, defines elements that are used to contain
  * information pertaining to executable scripts or the lack of support
  * for executable scripts.
+ *
  * @note This module does not contain inline scripting elements
  */
 class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Scripting';
 
     /**
-     * @type array
+     * @var array
      */
-    public $elements = array('script', 'noscript');
+    public $elements = ['script', 'noscript'];
 
     /**
-     * @type array
+     * @var array
      */
-    public $content_sets = array('Block' => 'script | noscript', 'Inline' => 'script | noscript');
+    public $content_sets = ['Block' => 'script | noscript', 'Inline' => 'script | noscript'];
 
     /**
-     * @type bool
+     * @var bool
      */
     public $safe = false;
 
@@ -52,16 +53,16 @@ class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
         // In theory, this could be safe, but I don't see any reason to
         // allow it.
         $this->info['noscript'] = new HTMLPurifier_ElementDef();
-        $this->info['noscript']->attr = array(0 => array('Common'));
+        $this->info['noscript']->attr = [0 => ['Common']];
         $this->info['noscript']->content_model = 'Heading | List | Block';
         $this->info['noscript']->content_model_type = 'required';
 
         $this->info['script'] = new HTMLPurifier_ElementDef();
-        $this->info['script']->attr = array(
-            'defer' => new HTMLPurifier_AttrDef_Enum(array('defer')),
-            'src' => new HTMLPurifier_AttrDef_URI(true),
-            'type' => new HTMLPurifier_AttrDef_Enum(array('text/javascript'))
-        );
+        $this->info['script']->attr = [
+            'defer' => new HTMLPurifier_AttrDef_Enum(['defer']),
+            'src'   => new HTMLPurifier_AttrDef_URI(true),
+            'type'  => new HTMLPurifier_AttrDef_Enum(['text/javascript']),
+        ];
         $this->info['script']->content_model = '#PCDATA';
         $this->info['script']->content_model_type = 'optional';
         $this->info['script']->attr_transform_pre[] =

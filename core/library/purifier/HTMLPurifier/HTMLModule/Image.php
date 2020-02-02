@@ -2,14 +2,14 @@
 
 /**
  * XHTML 1.1 Image Module provides basic image embedding.
+ *
  * @note There is specialized code for removing empty images in
  *       HTMLPurifier_Strategy_RemoveForeignElements
  */
 class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
 {
-
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Image';
 
@@ -24,15 +24,15 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
             'Inline',
             'Empty',
             'Common',
-            array(
+            [
                 'alt*' => 'Text',
                 // According to the spec, it's Length, but percents can
                 // be abused, so we allow only Pixels.
-                'height' => 'Pixels#' . $max,
-                'width' => 'Pixels#' . $max,
+                'height'   => 'Pixels#'.$max,
+                'width'    => 'Pixels#'.$max,
                 'longdesc' => 'URI',
-                'src*' => new HTMLPurifier_AttrDef_URI(true), // embedded
-            )
+                'src*'     => new HTMLPurifier_AttrDef_URI(true), // embedded
+            ]
         );
         if ($max === null || $config->get('HTML.Trusted')) {
             $img->attr['height'] =

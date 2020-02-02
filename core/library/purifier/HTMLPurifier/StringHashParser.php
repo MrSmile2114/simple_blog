@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Parses string hash files. File format is as such:
+ * Parses string hash files. File format is as such:.
  *
  *      DefaultKeyValue
  *      KEY: Value
@@ -27,15 +27,16 @@
  */
 class HTMLPurifier_StringHashParser
 {
-
     /**
-     * @type string
+     * @var string
      */
     public $default = 'ID';
 
     /**
      * Parses a file that contains a single string-hash.
+     *
      * @param string $file
+     *
      * @return array
      */
     public function parseFile($file)
@@ -49,12 +50,15 @@ class HTMLPurifier_StringHashParser
         }
         $ret = $this->parseHandle($fh);
         fclose($fh);
+
         return $ret;
     }
 
     /**
-     * Parses a file that contains multiple string-hashes delimited by '----'
+     * Parses a file that contains multiple string-hashes delimited by '----'.
+     *
      * @param string $file
+     *
      * @return array
      */
     public function parseMultiFile($file)
@@ -62,7 +66,7 @@ class HTMLPurifier_StringHashParser
         if (!file_exists($file)) {
             return false;
         }
-        $ret = array();
+        $ret = [];
         $fh = fopen($file, 'r');
         if (!$fh) {
             return false;
@@ -71,23 +75,27 @@ class HTMLPurifier_StringHashParser
             $ret[] = $this->parseHandle($fh);
         }
         fclose($fh);
+
         return $ret;
     }
 
     /**
      * Internal parser that acepts a file handle.
+     *
      * @note While it's possible to simulate in-memory parsing by using
      *       custom stream wrappers, if such a use-case arises we should
      *       factor out the file handle into its own class.
+     *
      * @param resource $fh File handle with pointer at start of valid string-hash
-     *            block.
+     *                     block.
+     *
      * @return array
      */
     protected function parseHandle($fh)
     {
-        $state   = false;
-        $single  = false;
-        $ret     = array();
+        $state = false;
+        $single = false;
+        $ret = [];
         do {
             $line = fgets($fh);
             if ($line === false) {
@@ -118,17 +126,18 @@ class HTMLPurifier_StringHashParser
                     $line = trim($line);
                 } else {
                     // Use default declaration
-                    $state  = $this->default;
+                    $state = $this->default;
                 }
             }
             if ($single) {
                 $ret[$state] = $line;
                 $single = false;
-                $state  = false;
+                $state = false;
             } else {
                 $ret[$state] .= "$line\n";
             }
         } while (!feof($fh));
+
         return $ret;
     }
 }

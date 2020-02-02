@@ -5,25 +5,24 @@
  */
 class HTMLPurifier_AttrDef_Switch
 {
-
     /**
-     * @type string
+     * @var string
      */
     protected $tag;
 
     /**
-     * @type HTMLPurifier_AttrDef
+     * @var HTMLPurifier_AttrDef
      */
     protected $withTag;
 
     /**
-     * @type HTMLPurifier_AttrDef
+     * @var HTMLPurifier_AttrDef
      */
     protected $withoutTag;
 
     /**
-     * @param string $tag Tag name to switch upon
-     * @param HTMLPurifier_AttrDef $with_tag Call if token matches tag
+     * @param string               $tag         Tag name to switch upon
+     * @param HTMLPurifier_AttrDef $with_tag    Call if token matches tag
      * @param HTMLPurifier_AttrDef $without_tag Call if token doesn't match, or there is no token
      */
     public function __construct($tag, $with_tag, $without_tag)
@@ -34,9 +33,10 @@ class HTMLPurifier_AttrDef_Switch
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)

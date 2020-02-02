@@ -1,14 +1,15 @@
 <?php
 
 /**
- * Implements required attribute stipulation for <script>
+ * Implements required attribute stipulation for <script>.
  */
 class HTMLPurifier_AttrTransform_ScriptRequired extends HTMLPurifier_AttrTransform
 {
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -16,6 +17,7 @@ class HTMLPurifier_AttrTransform_ScriptRequired extends HTMLPurifier_AttrTransfo
         if (!isset($attr['type'])) {
             $attr['type'] = 'text/javascript';
         }
+
         return $attr;
     }
 }

@@ -1,24 +1,25 @@
 <?php
 
 /**
- * Validates news (Usenet) as defined by generic RFC 1738
+ * Validates news (Usenet) as defined by generic RFC 1738.
  */
 class HTMLPurifier_URIScheme_news extends HTMLPurifier_URIScheme
 {
     /**
-     * @type bool
+     * @var bool
      */
     public $browsable = false;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_URI     $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function doValidate(&$uri, $config, $context)

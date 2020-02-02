@@ -3,18 +3,18 @@
 class HTMLPurifier_HTMLModule_NonXMLCommonAttributes extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'NonXMLCommonAttributes';
 
     /**
-     * @type array
+     * @var array
      */
-    public $attr_collections = array(
-        'Lang' => array(
+    public $attr_collections = [
+        'Lang' => [
             'lang' => 'LanguageCode',
-        )
-    );
+        ],
+    ];
 }
 
 // vim: et sw=4 sts=4

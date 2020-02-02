@@ -1,10 +1,9 @@
 <?php
 
-
 namespace base;
 
-
-class View{
+class View
+{
     public $basePath = __DIR__.'/../views/templates/';
     protected $title;
     protected $css = [];
@@ -12,29 +11,33 @@ class View{
 
     protected $_layout;
 
-    public function render($tplName, $data){
+    public function render($tplName, $data)
+    {
         include $this->_layout;
     }
 
     /**
      * @param string $layout
      */
-    public function setLayout($layout){
+    public function setLayout($layout)
+    {
         $this->_layout = __DIR__.'/../views/layouts/'.$layout.'.php';
     }
 
     /**
      * @param string $title
      */
-    public function setTitle($title){
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
     /**
      * @param array $css
      */
-    public function addCss($cssArr){
-        foreach ($cssArr as $css){
+    public function addCss($cssArr)
+    {
+        foreach ($cssArr as $css) {
             $this->css[] = $css;
         }
     }
@@ -50,8 +53,9 @@ class View{
     /**
      * @param array $js
      */
-    public function addJs($jsArr){
-        foreach ($jsArr as $js){
+    public function addJs($jsArr)
+    {
+        foreach ($jsArr as $js) {
             $this->js[] = $js;
         }
     }

@@ -1,22 +1,24 @@
 <?php
 
 /**
- * Validates an IPv4 address
+ * Validates an IPv4 address.
+ *
  * @author Feyd @ forums.devnetwork.net (public domain)
  */
 class HTMLPurifier_AttrDef_URI_IPv4 extends HTMLPurifier_AttrDef
 {
-
     /**
      * IPv4 regex, protected so that IPv6 can reuse it.
-     * @type string
+     *
+     * @var string
      */
     protected $ip4;
 
     /**
-     * @param string $aIP
-     * @param HTMLPurifier_Config $config
+     * @param string               $aIP
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($aIP, $config, $context)
@@ -25,9 +27,10 @@ class HTMLPurifier_AttrDef_URI_IPv4 extends HTMLPurifier_AttrDef
             $this->_loadRegex();
         }
 
-        if (preg_match('#^' . $this->ip4 . '$#s', $aIP)) {
+        if (preg_match('#^'.$this->ip4.'$#s', $aIP)) {
             return $aIP;
         }
+
         return false;
     }
 

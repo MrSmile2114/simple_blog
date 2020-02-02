@@ -5,38 +5,41 @@
 // $config or $context to the callback functions.
 
 /**
- * Handles referencing and derefencing character entities
+ * Handles referencing and derefencing character entities.
  */
 class HTMLPurifier_EntityParser
 {
-
     /**
      * Reference to entity lookup table.
-     * @type HTMLPurifier_EntityLookup
+     *
+     * @var HTMLPurifier_EntityLookup
      */
     protected $_entity_lookup;
 
     /**
      * Callback regex string for entities in text.
-     * @type string
+     *
+     * @var string
      */
     protected $_textEntitiesRegex;
 
     /**
      * Callback regex string for entities in attributes.
-     * @type string
+     *
+     * @var string
      */
     protected $_attrEntitiesRegex;
 
     /**
-     * Tests if the beginning of a string is a semi-optional regex
+     * Tests if the beginning of a string is a semi-optional regex.
      */
     protected $_semiOptionalPrefixRegex;
 
-    public function __construct() {
+    public function __construct()
+    {
         // From
         // http://stackoverflow.com/questions/15532252/why-is-reg-being-rendered-as-without-the-bounding-semicolon
-        $semi_optional = "quot|QUOT|lt|LT|gt|GT|amp|AMP|AElig|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|Iacute|Icirc|Igrave|Iuml|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml";
+        $semi_optional = 'quot|QUOT|lt|LT|gt|GT|amp|AMP|AElig|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|Iacute|Icirc|Igrave|Iuml|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml';
 
         // NB: three empty captures to put the fourth match in the right
         // place
@@ -69,21 +72,21 @@ class HTMLPurifier_EntityParser
             // like)
             "($semi_optional)(?![=;A-Za-z0-9])".
             ')/';
-
     }
 
     /**
      * Substitute entities with the parsed equivalents.  Use this on
-     * textual data in an HTML document (as opposed to attributes.)
+     * textual data in an HTML document (as opposed to attributes.).
      *
      * @param string $string String to have entities parsed.
+     *
      * @return string Parsed string.
      */
     public function substituteTextEntities($string)
     {
         return preg_replace_callback(
             $this->_textEntitiesRegex,
-            array($this, 'entityCallback'),
+            [$this, 'entityCallback'],
             $string
         );
     }
@@ -93,13 +96,14 @@ class HTMLPurifier_EntityParser
      * attribute contents in documents.
      *
      * @param string $string String to have entities parsed.
+     *
      * @return string Parsed string.
      */
     public function substituteAttrEntities($string)
     {
         return preg_replace_callback(
             $this->_attrEntitiesRegex,
-            array($this, 'entityCallback'),
+            [$this, 'entityCallback'],
             $string
         );
     }
@@ -107,21 +111,21 @@ class HTMLPurifier_EntityParser
     /**
      * Callback function for substituteNonSpecialEntities() that does the work.
      *
-     * @param array $matches  PCRE matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
+     *
      * @return string Replacement string.
      */
-
     protected function entityCallback($matches)
     {
         $entity = $matches[0];
         $hex_part = @$matches[1];
         $dec_part = @$matches[2];
         $named_part = empty($matches[3]) ? @$matches[4] : $matches[3];
-        if ($hex_part !== NULL && $hex_part !== "") {
+        if ($hex_part !== null && $hex_part !== '') {
             return HTMLPurifier_Encoder::unichr(hexdec($hex_part));
-        } elseif ($dec_part !== NULL && $dec_part !== "") {
+        } elseif ($dec_part !== null && $dec_part !== '') {
             return HTMLPurifier_Encoder::unichr((int) $dec_part);
         } else {
             if (!$this->_entity_lookup) {
@@ -137,10 +141,11 @@ class HTMLPurifier_EntityParser
                 if (!empty($matches[3])) {
                     return preg_replace_callback(
                         $this->_semiOptionalPrefixRegex,
-                        array($this, 'entityCallback'),
+                        [$this, 'entityCallback'],
                         $entity
                     );
                 }
+
                 return $entity;
             }
         }
@@ -150,36 +155,39 @@ class HTMLPurifier_EntityParser
 
     /**
      * Callback regex string for parsing entities.
-     * @type string
+     *
+     * @var string
      */
     protected $_substituteEntitiesRegex =
         '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
-        //     1. hex             2. dec      3. string (XML style)
+    //     1. hex             2. dec      3. string (XML style)
 
     /**
      * Decimal to parsed string conversion table for special entities.
-     * @type array
+     *
+     * @var array
      */
     protected $_special_dec2str =
-            array(
-                    34 => '"',
-                    38 => '&',
-                    39 => "'",
-                    60 => '<',
-                    62 => '>'
-            );
+            [
+                34 => '"',
+                38 => '&',
+                39 => "'",
+                60 => '<',
+                62 => '>',
+            ];
 
     /**
      * Stripped entity names to decimal conversion table for special entities.
-     * @type array
+     *
+     * @var array
      */
     protected $_special_ent2dec =
-            array(
-                    'quot' => 34,
-                    'amp'  => 38,
-                    'lt'   => 60,
-                    'gt'   => 62
-            );
+            [
+                'quot' => 34,
+                'amp'  => 38,
+                'lt'   => 60,
+                'gt'   => 62,
+            ];
 
     /**
      * Substitutes non-special entities with their parsed equivalents. Since
@@ -187,6 +195,7 @@ class HTMLPurifier_EntityParser
      * it before everything else.
      *
      * @param string $string String to have non-special entities parsed.
+     *
      * @return string Parsed string.
      */
     public function substituteNonSpecialEntities($string)
@@ -194,7 +203,7 @@ class HTMLPurifier_EntityParser
         // it will try to detect missing semicolons, but don't rely on it
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
-            array($this, 'nonSpecialEntityCallback'),
+            [$this, 'nonSpecialEntityCallback'],
             $string
         );
     }
@@ -202,12 +211,12 @@ class HTMLPurifier_EntityParser
     /**
      * Callback function for substituteNonSpecialEntities() that does the work.
      *
-     * @param array $matches  PCRE matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
+     *
      * @return string Replacement string.
      */
-
     protected function nonSpecialEntityCallback($matches)
     {
         // replaces all but big five
@@ -220,6 +229,7 @@ class HTMLPurifier_EntityParser
             if (isset($this->_special_dec2str[$code])) {
                 return $entity;
             }
+
             return HTMLPurifier_Encoder::unichr($code);
         } else {
             if (isset($this->_special_ent2dec[$matches[3]])) {
@@ -243,13 +253,14 @@ class HTMLPurifier_EntityParser
      * would have to be called a lot (for every parsed section).
      *
      * @param string $string String to have non-special entities parsed.
+     *
      * @return string Parsed string.
      */
     public function substituteSpecialEntities($string)
     {
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
-            array($this, 'specialEntityCallback'),
+            [$this, 'specialEntityCallback'],
             $string
         );
     }
@@ -259,9 +270,10 @@ class HTMLPurifier_EntityParser
      *
      * This callback has same syntax as nonSpecialEntityCallback().
      *
-     * @param array $matches  PCRE-style matches array, with 0 the entire match, and
-     *                  either index 1, 2 or 3 set with a hex value, dec value,
-     *                  or string (respectively).
+     * @param array $matches PCRE-style matches array, with 0 the entire match, and
+     *                       either index 1, 2 or 3 set with a hex value, dec value,
+     *                       or string (respectively).
+     *
      * @return string Replacement string.
      */
     protected function specialEntityCallback($matches)
@@ -271,6 +283,7 @@ class HTMLPurifier_EntityParser
         if ($is_num) {
             $is_hex = (@$entity[2] === 'x');
             $int = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
+
             return isset($this->_special_dec2str[$int]) ?
                 $this->_special_dec2str[$int] :
                 $entity;

@@ -12,9 +12,10 @@
 class HTMLPurifier_AttrTransform_TargetNoreferrer extends HTMLPurifier_AttrTransform
 {
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -22,7 +23,7 @@ class HTMLPurifier_AttrTransform_TargetNoreferrer extends HTMLPurifier_AttrTrans
         if (isset($attr['rel'])) {
             $rels = explode(' ', $attr['rel']);
         } else {
-            $rels = array();
+            $rels = [];
         }
         if (isset($attr['target']) && !in_array('noreferrer', $rels)) {
             $rels[] = 'noreferrer';
@@ -34,4 +35,3 @@ class HTMLPurifier_AttrTransform_TargetNoreferrer extends HTMLPurifier_AttrTrans
         return $attr;
     }
 }
-

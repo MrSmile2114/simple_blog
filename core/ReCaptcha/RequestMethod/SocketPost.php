@@ -3,6 +3,7 @@
  * This is a PHP library that handles calling reCAPTCHA.
  *
  * @copyright Copyright (c) 2015, Google Inc.
+ *
  * @link      https://www.google.com/recaptcha
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -38,16 +39,17 @@ use ReCaptcha\RequestParameters;
 class SocketPost implements RequestMethod
 {
     /**
-     * Socket to the reCAPTCHA service
+     * Socket to the reCAPTCHA service.
+     *
      * @var Socket
      */
     private $socket;
 
     /**
-     * Only needed if you want to override the defaults
+     * Only needed if you want to override the defaults.
      *
-     * @param \ReCaptcha\RequestMethod\Socket $socket optional socket, injectable for testing
-     * @param string $siteVerifyUrl URL for reCAPTCHA siteverify API
+     * @param \ReCaptcha\RequestMethod\Socket $socket        optional socket, injectable for testing
+     * @param string                          $siteVerifyUrl URL for reCAPTCHA siteverify API
      */
     public function __construct(Socket $socket = null, $siteVerifyUrl = null)
     {
@@ -59,6 +61,7 @@ class SocketPost implements RequestMethod
      * Submit the POST request with the specified parameters.
      *
      * @param RequestParameters $params Request parameters
+     *
      * @return string Body of the reCAPTCHA response
      */
     public function submit(RequestParameters $params)
@@ -67,18 +70,18 @@ class SocketPost implements RequestMethod
         $errstr = '';
         $urlParsed = parse_url($this->siteVerifyUrl);
 
-        if (false === $this->socket->fsockopen('ssl://' . $urlParsed['host'], 443, $errno, $errstr, 30)) {
+        if (false === $this->socket->fsockopen('ssl://'.$urlParsed['host'], 443, $errno, $errstr, 30)) {
             return '{"success": false, "error-codes": ["'.ReCaptcha::E_CONNECTION_FAILED.'"]}';
         }
 
         $content = $params->toQueryString();
 
-        $request = "POST " . $urlParsed['path'] . " HTTP/1.1\r\n";
-        $request .= "Host: " . $urlParsed['host'] . "\r\n";
+        $request = 'POST '.$urlParsed['path']." HTTP/1.1\r\n";
+        $request .= 'Host: '.$urlParsed['host']."\r\n";
         $request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $request .= "Content-length: " . strlen($content) . "\r\n";
+        $request .= 'Content-length: '.strlen($content)."\r\n";
         $request .= "Connection: close\r\n\r\n";
-        $request .= $content . "\r\n\r\n";
+        $request .= $content."\r\n\r\n";
 
         $this->socket->fwrite($request);
         $response = '';

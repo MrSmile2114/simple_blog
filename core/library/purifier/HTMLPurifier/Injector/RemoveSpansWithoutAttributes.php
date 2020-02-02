@@ -1,33 +1,34 @@
 <?php
 
 /**
- * Injector that removes spans with no attributes
+ * Injector that removes spans with no attributes.
  */
 class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'RemoveSpansWithoutAttributes';
 
     /**
-     * @type array
+     * @var array
      */
-    public $needed = array('span');
+    public $needed = ['span'];
 
     /**
-     * @type HTMLPurifier_AttrValidator
+     * @var HTMLPurifier_AttrValidator
      */
     private $attrValidator;
 
     /**
      * Used by AttrValidator.
-     * @type HTMLPurifier_Config
+     *
+     * @var HTMLPurifier_Config
      */
     private $config;
 
     /**
-     * @type HTMLPurifier_Context
+     * @var HTMLPurifier_Context
      */
     private $context;
 
@@ -36,6 +37,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
         $this->attrValidator = new HTMLPurifier_AttrValidator();
         $this->config = $config;
         $this->context = $context;
+
         return parent::prepare($config, $context);
     }
 

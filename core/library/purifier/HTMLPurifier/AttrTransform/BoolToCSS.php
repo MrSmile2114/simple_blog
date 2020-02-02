@@ -1,25 +1,27 @@
 <?php
 
 /**
- * Pre-transform that changes converts a boolean attribute to fixed CSS
+ * Pre-transform that changes converts a boolean attribute to fixed CSS.
  */
 class HTMLPurifier_AttrTransform_BoolToCSS extends HTMLPurifier_AttrTransform
 {
     /**
      * Name of boolean attribute that is trigger.
-     * @type string
+     *
+     * @var string
      */
     protected $attr;
 
     /**
      * CSS declarations to add to style, needs trailing semicolon.
-     * @type string
+     *
+     * @var string
      */
     protected $css;
 
     /**
      * @param string $attr attribute name to convert from
-     * @param string $css CSS declarations to add to style (needs semicolon)
+     * @param string $css  CSS declarations to add to style (needs semicolon)
      */
     public function __construct($attr, $css)
     {
@@ -28,9 +30,10 @@ class HTMLPurifier_AttrTransform_BoolToCSS extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -40,6 +43,7 @@ class HTMLPurifier_AttrTransform_BoolToCSS extends HTMLPurifier_AttrTransform
         }
         unset($attr[$this->attr]);
         $this->prependCSS($attr, $this->css);
+
         return $attr;
     }
 }

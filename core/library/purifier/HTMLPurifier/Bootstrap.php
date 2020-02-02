@@ -2,7 +2,7 @@
 
 // constants are slow, so we use as few as possible
 if (!defined('HTMLPURIFIER_PREFIX')) {
-    define('HTMLPURIFIER_PREFIX', realpath(dirname(__FILE__) . '/..'));
+    define('HTMLPURIFIER_PREFIX', realpath(dirname(__FILE__).'/..'));
 }
 
 // accomodations for versions earlier than 5.0.2
@@ -29,15 +29,16 @@ if (!defined('PHP_EOL')) {
  */
 class HTMLPurifier_Bootstrap
 {
-
     /**
-     * Autoload function for HTML Purifier
+     * Autoload function for HTML Purifier.
+     *
      * @param string $class Class to load
+     *
      * @return bool
      */
     public static function autoload($class)
     {
-        $file = HTMLPurifier_Bootstrap::getPath($class);
+        $file = self::getPath($class);
         if (!$file) {
             return false;
         }
@@ -46,13 +47,16 @@ class HTMLPurifier_Bootstrap
         // Zend extensions such as Zend debugger and APC, this invariant
         // may be broken.  Since we have efficient alternatives, pay
         // the cost here and avoid the bug.
-        require_once HTMLPURIFIER_PREFIX . '/' . $file;
+        require_once HTMLPURIFIER_PREFIX.'/'.$file;
+
         return true;
     }
 
     /**
      * Returns the path for a specific class.
+     *
      * @param string $class Class path to get
+     *
      * @return string
      */
     public static function getPath($class)
@@ -63,13 +67,14 @@ class HTMLPurifier_Bootstrap
         // Custom implementations
         if (strncmp('HTMLPurifier_Language_', $class, 22) === 0) {
             $code = str_replace('_', '-', substr($class, 22));
-            $file = 'HTMLPurifier/Language/classes/' . $code . '.php';
+            $file = 'HTMLPurifier/Language/classes/'.$code.'.php';
         } else {
-            $file = str_replace('_', '/', $class) . '.php';
+            $file = str_replace('_', '/', $class).'.php';
         }
-        if (!file_exists(HTMLPURIFIER_PREFIX . '/' . $file)) {
+        if (!file_exists(HTMLPURIFIER_PREFIX.'/'.$file)) {
             return false;
         }
+
         return $file;
     }
 
@@ -78,7 +83,7 @@ class HTMLPurifier_Bootstrap
      */
     public static function registerAutoload()
     {
-        $autoload = array('HTMLPurifier_Bootstrap', 'autoload');
+        $autoload = ['HTMLPurifier_Bootstrap', 'autoload'];
         if (($funcs = spl_autoload_functions()) === false) {
             spl_autoload_register($autoload);
         } elseif (function_exists('spl_autoload_unregister')) {
@@ -86,7 +91,7 @@ class HTMLPurifier_Bootstrap
                 // prepend flag exists, no need for shenanigans
                 spl_autoload_register($autoload, true, true);
             } else {
-                $buggy  = version_compare(PHP_VERSION, '5.2.11', '<');
+                $buggy = version_compare(PHP_VERSION, '5.2.11', '<');
                 $compat = version_compare(PHP_VERSION, '5.1.2', '<=') &&
                           version_compare(PHP_VERSION, '5.1.0', '>=');
                 foreach ($funcs as $func) {

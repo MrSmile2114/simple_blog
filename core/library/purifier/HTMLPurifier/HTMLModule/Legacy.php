@@ -15,11 +15,10 @@
  * as well as transform elements that don't have an implementation.
  * See docs/ref-strictness.txt for more details.
  */
-
 class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Legacy';
 
@@ -33,12 +32,12 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
             'Inline',
             'Empty',
             null,
-            array(
+            [
                 'color' => 'Color',
-                'face' => 'Text', // extremely broad, we should
-                'size' => 'Text', // tighten it
-                'id' => 'ID'
-            )
+                'face'  => 'Text', // extremely broad, we should
+                'size'  => 'Text', // tighten it
+                'id'    => 'ID',
+            ]
         );
         $this->addElement('center', 'Block', 'Flow', 'Common');
         $this->addElement(
@@ -46,29 +45,29 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
             'Block',
             'Required: li',
             'Common',
-            array(
-                'compact' => 'Bool#compact'
-            )
+            [
+                'compact' => 'Bool#compact',
+            ]
         );
         $this->addElement(
             'font',
             'Inline',
             'Inline',
-            array('Core', 'I18N'),
-            array(
+            ['Core', 'I18N'],
+            [
                 'color' => 'Color',
-                'face' => 'Text', // extremely broad, we should
-                'size' => 'Text', // tighten it
-            )
+                'face'  => 'Text', // extremely broad, we should
+                'size'  => 'Text', // tighten it
+            ]
         );
         $this->addElement(
             'menu',
             'Block',
             'Required: li',
             'Common',
-            array(
-                'compact' => 'Bool#compact'
-            )
+            [
+                'compact' => 'Bool#compact',
+            ]
         );
 
         $s = $this->addElement('s', 'Inline', 'Inline', 'Common');

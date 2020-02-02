@@ -5,10 +5,10 @@
  */
 class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
 {
-
     /**
      * Instance to defer number validation to.
-     * @type HTMLPurifier_AttrDef_CSS_Number
+     *
+     * @var HTMLPurifier_AttrDef_CSS_Number
      */
     protected $number_def;
 
@@ -21,9 +21,10 @@ class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -47,6 +48,7 @@ class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
         if ($number === false) {
             return false;
         }
+
         return "$number%";
     }
 }

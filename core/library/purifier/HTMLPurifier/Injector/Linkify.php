@@ -6,14 +6,14 @@
 class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Linkify';
 
     /**
-     * @type array
+     * @var array
      */
-    public $needed = array('a' => array('href'));
+    public $needed = ['a' => ['href']];
 
     /**
      * @param HTMLPurifier_Token $token
@@ -40,8 +40,7 @@ class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
             '/\\b((?:[a-z][\\w\\-]+:(?:\\/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}\\/)(?:[^\\s()<>]|\\((?:[^\\s()<>]|(?:\\([^\\s()<>]+\\)))*\\))+(?:\\((?:[^\\s()<>]|(?:\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:\'".,<>?\x{00ab}\x{00bb}\x{201c}\x{201d}\x{2018}\x{2019}]))/iu',
             $token->data, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-
-        $token = array();
+        $token = [];
 
         // $i = index
         // $c = count
@@ -53,7 +52,7 @@ class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
                 }
                 $token[] = new HTMLPurifier_Token_Text($bits[$i]);
             } else {
-                $token[] = new HTMLPurifier_Token_Start('a', array('href' => $bits[$i]));
+                $token[] = new HTMLPurifier_Token_Start('a', ['href' => $bits[$i]]);
                 $token[] = new HTMLPurifier_Token_Text($bits[$i]);
                 $token[] = new HTMLPurifier_Token_End('a');
             }

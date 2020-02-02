@@ -3,6 +3,7 @@
 /**
  * XHTML 1.1 Presentation Module, defines simple presentation-related
  * markup. Text Extension Module.
+ *
  * @note The official XML Schema and DTD specs further divide this into
  *       two modules:
  *          - Block Presentation (hr)
@@ -12,9 +13,8 @@
  */
 class HTMLPurifier_HTMLModule_Presentation extends HTMLPurifier_HTMLModule
 {
-
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Presentation';
 

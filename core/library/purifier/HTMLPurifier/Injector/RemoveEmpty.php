@@ -3,39 +3,41 @@
 class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
 {
     /**
-     * @type HTMLPurifier_Context
+     * @var HTMLPurifier_Context
      */
     private $context;
 
     /**
-     * @type HTMLPurifier_Config
+     * @var HTMLPurifier_Config
      */
     private $config;
 
     /**
-     * @type HTMLPurifier_AttrValidator
+     * @var HTMLPurifier_AttrValidator
      */
     private $attrValidator;
 
     /**
-     * @type bool
+     * @var bool
      */
     private $removeNbsp;
 
     /**
-     * @type bool
+     * @var bool
      */
     private $removeNbspExceptions;
 
     /**
-     * Cached contents of %AutoFormat.RemoveEmpty.Predicate
-     * @type array
+     * Cached contents of %AutoFormat.RemoveEmpty.Predicate.
+     *
+     * @var array
      */
     private $exclude;
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return void
      */
     public function prepare($config, $context)
@@ -72,7 +74,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
                     continue;
                 }
                 if ($this->removeNbsp && !isset($this->removeNbspExceptions[$token->name])) {
-                    $plain = str_replace("\xC2\xA0", "", $next->data);
+                    $plain = str_replace("\xC2\xA0", '', $next->data);
                     $isWsOrNbsp = $plain === '' || ctype_space($plain);
                     if ($isWsOrNbsp) {
                         continue;
@@ -87,9 +89,13 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
             if (isset($this->exclude[$token->name])) {
                 $r = true;
                 foreach ($this->exclude[$token->name] as $elem) {
-                    if (!isset($token->attr[$elem])) $r = false;
+                    if (!isset($token->attr[$elem])) {
+                        $r = false;
+                    }
                 }
-                if ($r) return;
+                if ($r) {
+                    return;
+                }
             }
             if (isset($token->attr['id']) || isset($token->attr['name'])) {
                 return;
@@ -103,7 +109,8 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
                 break;
             }
             // This is safe because we removed the token that triggered this.
-            $this->rewindOffset($b+$deleted);
+            $this->rewindOffset($b + $deleted);
+
             return;
         }
     }

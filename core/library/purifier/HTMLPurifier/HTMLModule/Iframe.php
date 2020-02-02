@@ -9,14 +9,13 @@
  */
 class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
 {
-
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Iframe';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $safe = false;
 
@@ -33,17 +32,17 @@ class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
             'Inline',
             'Flow',
             'Common',
-            array(
-                'src' => 'URI#embedded',
-                'width' => 'Length',
-                'height' => 'Length',
-                'name' => 'ID',
-                'scrolling' => 'Enum#yes,no,auto',
-                'frameborder' => 'Enum#0,1',
-                'longdesc' => 'URI',
+            [
+                'src'          => 'URI#embedded',
+                'width'        => 'Length',
+                'height'       => 'Length',
+                'name'         => 'ID',
+                'scrolling'    => 'Enum#yes,no,auto',
+                'frameborder'  => 'Enum#0,1',
+                'longdesc'     => 'URI',
                 'marginheight' => 'Pixels',
-                'marginwidth' => 'Pixels',
-            )
+                'marginwidth'  => 'Pixels',
+            ]
         );
     }
 }
