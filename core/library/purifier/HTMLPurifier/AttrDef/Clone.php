@@ -8,7 +8,8 @@ class HTMLPurifier_AttrDef_Clone extends HTMLPurifier_AttrDef
 {
     /**
      * What we're cloning.
-     * @type HTMLPurifier_AttrDef
+     *
+     * @var HTMLPurifier_AttrDef
      */
     protected $clone;
 
@@ -21,9 +22,10 @@ class HTMLPurifier_AttrDef_Clone extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $v
-     * @param HTMLPurifier_Config $config
+     * @param string               $v
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($v, $config, $context)
@@ -33,6 +35,7 @@ class HTMLPurifier_AttrDef_Clone extends HTMLPurifier_AttrDef
 
     /**
      * @param string $string
+     *
      * @return HTMLPurifier_AttrDef
      */
     public function make($string)

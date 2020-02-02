@@ -9,10 +9,12 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
 {
     /**
      * @param mixed $var
-     * @param int $type
-     * @param bool $allow_null
-     * @return array|bool|float|int|mixed|null|string
+     * @param int   $type
+     * @param bool  $allow_null
+     *
      * @throws HTMLPurifier_VarParserException
+     *
+     * @return array|bool|float|int|mixed|null|string
      */
     protected function parseImplementation($var, $type, $allow_null)
     {
@@ -31,17 +33,19 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 return $var;
             case self::INT:
                 if (is_string($var) && ctype_digit($var)) {
-                    $var = (int)$var;
+                    $var = (int) $var;
                 }
+
                 return $var;
             case self::FLOAT:
                 if ((is_string($var) && is_numeric($var)) || is_int($var)) {
-                    $var = (float)$var;
+                    $var = (float) $var;
                 }
+
                 return $var;
             case self::BOOL:
                 if (is_int($var) && ($var === 0 || $var === 1)) {
-                    $var = (bool)$var;
+                    $var = (bool) $var;
                 } elseif (is_string($var)) {
                     if ($var == 'on' || $var == 'true' || $var == '1') {
                         $var = true;
@@ -51,6 +55,7 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                         throw new HTMLPurifier_VarParserException("Unrecognized value '$var' for $type");
                     }
                 }
+
                 return $var;
             case self::ALIST:
             case self::HASH:
@@ -60,7 +65,7 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                     // a single empty string item, but having an empty
                     // array is more intuitive
                     if ($var == '') {
-                        return array();
+                        return [];
                     }
                     if (strpos($var, "\n") === false && strpos($var, "\r") === false) {
                         // simplistic string to array method that only works
@@ -75,7 +80,7 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                     }
                     if ($type === self::HASH) {
                         // key:value,key2:value2
-                        $nvar = array();
+                        $nvar = [];
                         foreach ($var as $keypair) {
                             $c = explode(':', $keypair, 2);
                             if (!isset($c[1])) {
@@ -94,31 +99,34 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                     if ($type == self::ALIST) {
                         return $var;
                     } elseif ($type == self::LOOKUP) {
-                        $new = array();
+                        $new = [];
                         foreach ($var as $key) {
                             $new[$key] = true;
                         }
+
                         return $new;
                     } else {
                         break;
                     }
                 }
                 if ($type === self::ALIST) {
-                    trigger_error("Array list did not have consecutive integer indexes", E_USER_WARNING);
+                    trigger_error('Array list did not have consecutive integer indexes', E_USER_WARNING);
+
                     return array_values($var);
                 }
                 if ($type === self::LOOKUP) {
                     foreach ($var as $key => $value) {
                         if ($value !== true) {
                             trigger_error(
-                                "Lookup array has non-true value at key '$key'; " .
-                                "maybe your input array was not indexed numerically",
+                                "Lookup array has non-true value at key '$key'; ".
+                                'maybe your input array was not indexed numerically',
                                 E_USER_WARNING
                             );
                         }
                         $var[$key] = true;
                     }
                 }
+
                 return $var;
             default:
                 $this->errorInconsistent(__CLASS__, $type);

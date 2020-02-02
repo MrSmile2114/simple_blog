@@ -6,10 +6,10 @@
  */
 abstract class HTMLPurifier_Definition
 {
-
     /**
      * Has setup() been called yet?
-     * @type bool
+     *
+     * @var bool
      */
     public $setup = false;
 
@@ -21,25 +21,29 @@ abstract class HTMLPurifier_Definition
      * is used and any writes to the raw definition object are short
      * circuited.  See enduser-customize.html for the high-level
      * picture.
-     * @type bool
+     *
+     * @var bool
      */
     public $optimized = null;
 
     /**
      * What type of definition is it?
-     * @type string
+     *
+     * @var string
      */
     public $type;
 
     /**
      * Sets up the definition object into the final form, something
-     * not done by the constructor
+     * not done by the constructor.
+     *
      * @param HTMLPurifier_Config $config
      */
     abstract protected function doSetup($config);
 
     /**
-     * Setup function that aborts if already setup
+     * Setup function that aborts if already setup.
+     *
      * @param HTMLPurifier_Config $config
      */
     public function setup($config)

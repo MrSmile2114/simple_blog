@@ -11,21 +11,20 @@
  */
 class HTMLPurifier_Token_Text extends HTMLPurifier_Token
 {
-
     /**
-     * @type string
+     * @var string
      */
     public $name = '#PCDATA';
     /**< PCDATA tag name compatible with DTD. */
 
     /**
-     * @type string
+     * @var string
      */
     public $data;
     /**< Parsed character data of text. */
 
     /**
-     * @type bool
+     * @var bool
      */
     public $is_whitespace;
 
@@ -33,9 +32,10 @@ class HTMLPurifier_Token_Text extends HTMLPurifier_Token
 
     /**
      * Constructor, accepts data and determines if it is whitespace.
+     *
      * @param string $data String parsed character data.
-     * @param int $line
-     * @param int $col
+     * @param int    $line
+     * @param int    $col
      */
     public function __construct($data, $line = null, $col = null)
     {
@@ -45,7 +45,8 @@ class HTMLPurifier_Token_Text extends HTMLPurifier_Token
         $this->col = $col;
     }
 
-    public function toNode() {
+    public function toNode()
+    {
         return new HTMLPurifier_Node_Text($this->data, $this->is_whitespace, $this->line, $this->col);
     }
 }

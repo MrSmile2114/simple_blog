@@ -6,14 +6,15 @@
 class HTMLPurifier_AttrTransform_SafeObject extends HTMLPurifier_AttrTransform
 {
     /**
-     * @type string
+     * @var string
      */
-    public $name = "SafeObject";
+    public $name = 'SafeObject';
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -21,6 +22,7 @@ class HTMLPurifier_AttrTransform_SafeObject extends HTMLPurifier_AttrTransform
         if (!isset($attr['type'])) {
             $attr['type'] = 'application/x-shockwave-flash';
         }
+
         return $attr;
     }
 }

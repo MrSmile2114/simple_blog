@@ -6,7 +6,7 @@
 class HTMLPurifier_HTMLModule_List extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'List';
 
@@ -20,9 +20,9 @@ class HTMLPurifier_HTMLModule_List extends HTMLPurifier_HTMLModule
     // the incredibly inefficient and draconic Custom ChildDef.
 
     /**
-     * @type array
+     * @var array
      */
-    public $content_sets = array('Flow' => 'List');
+    public $content_sets = ['Flow' => 'List'];
 
     /**
      * @param HTMLPurifier_Config $config

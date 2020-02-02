@@ -11,23 +11,26 @@
 abstract class HTMLPurifier_Node
 {
     /**
-     * Line number of the start token in the source document
-     * @type int
+     * Line number of the start token in the source document.
+     *
+     * @var int
      */
     public $line;
 
     /**
      * Column number of the start token in the source document. Null if unknown.
-     * @type int
+     *
+     * @var int
      */
     public $col;
 
     /**
      * Lookup array of processing that this token is exempt from.
      * Currently, valid values are "ValidateAttributes".
-     * @type array
+     *
+     * @var array
      */
-    public $armor = array();
+    public $armor = [];
 
     /**
      * When true, this node should be ignored as non-existent.
@@ -41,7 +44,8 @@ abstract class HTMLPurifier_Node
     /**
      * Returns a pair of start and end tokens, where the end token
      * is null if it is not necessary. Does not include children.
-     * @type array
+     *
+     * @var array
      */
     abstract public function toTokenPair();
 }

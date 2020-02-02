@@ -2,6 +2,7 @@
 
 /**
  * Validates the HTML attribute style, otherwise known as CSS.
+ *
  * @note We don't implement the whole CSS specification, so it might be
  *       difficult to reuse this component in the context of validating
  *       actual stylesheet declarations.
@@ -13,11 +14,11 @@
  */
 class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 {
-
     /**
-     * @param string $css
-     * @param HTMLPurifier_Config $config
+     * @param string               $css
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($css, $config, $context)
@@ -25,22 +26,23 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         $css = $this->parseCDATA($css);
 
         $definition = $config->getCSSDefinition();
-        $allow_duplicates = $config->get("CSS.AllowDuplicates");
-
+        $allow_duplicates = $config->get('CSS.AllowDuplicates');
 
         // According to the CSS2.1 spec, the places where a
         // non-delimiting semicolon can appear are in strings
         // escape sequences.   So here is some dumb hack to
         // handle quotes.
         $len = strlen($css);
-        $accum = "";
-        $declarations = array();
+        $accum = '';
+        $declarations = [];
         $quoted = false;
         for ($i = 0; $i < $len; $i++) {
             $c = strcspn($css, ";'\"", $i);
             $accum .= substr($css, $i, $c);
             $i += $c;
-            if ($i == $len) break;
+            if ($i == $len) {
+                break;
+            }
             $d = $css[$i];
             if ($quoted) {
                 $accum .= $d;
@@ -48,18 +50,20 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
                     $quoted = false;
                 }
             } else {
-                if ($d == ";") {
+                if ($d == ';') {
                     $declarations[] = $accum;
-                    $accum = "";
+                    $accum = '';
                 } else {
                     $accum .= $d;
                     $quoted = $d;
                 }
             }
         }
-        if ($accum != "") $declarations[] = $accum;
+        if ($accum != '') {
+            $declarations[] = $accum;
+        }
 
-        $propvalues = array();
+        $propvalues = [];
         $new_declarations = '';
 
         /**
@@ -128,9 +132,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         }
 
         return $new_declarations ? $new_declarations : false;
-
     }
-
 }
 
 // vim: et sw=4 sts=4

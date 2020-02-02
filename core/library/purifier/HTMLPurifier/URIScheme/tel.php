@@ -8,30 +8,30 @@
  * numbers so that they only include (possibly) a leading plus,
  * and then any number of digits and x'es.
  */
-
 class HTMLPurifier_URIScheme_tel extends HTMLPurifier_URIScheme
 {
     /**
-     * @type bool
+     * @var bool
      */
     public $browsable = false;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_URI     $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function doValidate(&$uri, $config, $context)
     {
         $uri->userinfo = null;
-        $uri->host     = null;
-        $uri->port     = null;
+        $uri->host = null;
+        $uri->port = null;
 
         // Delete all non-numeric characters, non-x characters
         // from phone number, EXCEPT for a leading plus sign.

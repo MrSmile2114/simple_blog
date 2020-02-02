@@ -8,12 +8,12 @@
 class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_DefinitionCache_Decorator
 {
     /**
-     * @type array
+     * @var array
      */
     protected $definitions;
 
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Memory';
 
@@ -22,12 +22,13 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
      */
     public function copy()
     {
-        return new HTMLPurifier_DefinitionCache_Decorator_Memory();
+        return new self();
     }
 
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return mixed
      */
     public function add($def, $config)
@@ -36,12 +37,14 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         if ($status) {
             $this->definitions[$this->generateKey($config)] = $def;
         }
+
         return $status;
     }
 
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return mixed
      */
     public function set($def, $config)
@@ -50,12 +53,14 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         if ($status) {
             $this->definitions[$this->generateKey($config)] = $def;
         }
+
         return $status;
     }
 
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return mixed
      */
     public function replace($def, $config)
@@ -64,11 +69,13 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         if ($status) {
             $this->definitions[$this->generateKey($config)] = $def;
         }
+
         return $status;
     }
 
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return mixed
      */
     public function get($config)
@@ -78,6 +85,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
             return $this->definitions[$key];
         }
         $this->definitions[$key] = parent::get($config);
+
         return $this->definitions[$key];
     }
 }

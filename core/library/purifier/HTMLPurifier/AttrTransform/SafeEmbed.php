@@ -3,14 +3,15 @@
 class HTMLPurifier_AttrTransform_SafeEmbed extends HTMLPurifier_AttrTransform
 {
     /**
-     * @type string
+     * @var string
      */
-    public $name = "SafeEmbed";
+    public $name = 'SafeEmbed';
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -18,6 +19,7 @@ class HTMLPurifier_AttrTransform_SafeEmbed extends HTMLPurifier_AttrTransform
         $attr['allowscriptaccess'] = 'never';
         $attr['allownetworking'] = 'internal';
         $attr['type'] = 'application/x-shockwave-flash';
+
         return $attr;
     }
 }

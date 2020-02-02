@@ -2,6 +2,7 @@
 
 /**
  * HTML Purifier's internal representation of a URI.
+ *
  * @note
  *      Internal data-structures are completely escaped. If the data needs
  *      to be used in a non-URI context (which is very unlikely), be sure
@@ -11,37 +12,37 @@
 class HTMLPurifier_URI
 {
     /**
-     * @type string
+     * @var string
      */
     public $scheme;
 
     /**
-     * @type string
+     * @var string
      */
     public $userinfo;
 
     /**
-     * @type string
+     * @var string
      */
     public $host;
 
     /**
-     * @type int
+     * @var int
      */
     public $port;
 
     /**
-     * @type string
+     * @var string
      */
     public $path;
 
     /**
-     * @type string
+     * @var string
      */
     public $query;
 
     /**
-     * @type string
+     * @var string
      */
     public $fragment;
 
@@ -49,7 +50,7 @@ class HTMLPurifier_URI
      * @param string $scheme
      * @param string $userinfo
      * @param string $host
-     * @param int $port
+     * @param int    $port
      * @param string $path
      * @param string $query
      * @param string $fragment
@@ -60,16 +61,18 @@ class HTMLPurifier_URI
         $this->scheme = is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
-        $this->port = is_null($port) ? $port : (int)$port;
+        $this->port = is_null($port) ? $port : (int) $port;
         $this->path = $path;
         $this->query = $query;
         $this->fragment = $fragment;
     }
 
     /**
-     * Retrieves a scheme object corresponding to the URI's scheme/default
-     * @param HTMLPurifier_Config $config
+     * Retrieves a scheme object corresponding to the URI's scheme/default.
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return HTMLPurifier_URIScheme Scheme object appropriate for validating this URI
      */
     public function getSchemeObj($config, $context)
@@ -88,21 +91,24 @@ class HTMLPurifier_URI
                 if ($def->defaultScheme !== null) {
                     // something funky happened to the default scheme object
                     trigger_error(
-                        'Default scheme object "' . $def->defaultScheme . '" was not readable',
+                        'Default scheme object "'.$def->defaultScheme.'" was not readable',
                         E_USER_WARNING
                     );
                 } // suppress error if it's null
                 return false;
             }
         }
+
         return $scheme_obj;
     }
 
     /**
      * Generic validation method applicable for all schemes. May modify
      * this URI in order to get it into a compliant form.
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool True if validation/filtering succeeds, false if failure
      */
     public function validate($config, $context)
@@ -110,7 +116,7 @@ class HTMLPurifier_URI
         // ABNF definitions from RFC 3986
         $chars_sub_delims = '!$&\'()*+,;=';
         $chars_gen_delims = ':/?#[]@';
-        $chars_pchar = $chars_sub_delims . ':@';
+        $chars_pchar = $chars_sub_delims.':@';
 
         // validate host
         if (!is_null($this->host)) {
@@ -138,7 +144,7 @@ class HTMLPurifier_URI
 
         // validate username
         if (!is_null($this->userinfo)) {
-            $encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims . ':');
+            $encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims.':');
             $this->userinfo = $encoder->encode($this->userinfo);
         }
 
@@ -150,7 +156,7 @@ class HTMLPurifier_URI
         }
 
         // validate path
-        $segments_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/');
+        $segments_encoder = new HTMLPurifier_PercentEncoder($chars_pchar.'/');
         if (!is_null($this->host)) { // this catches $this->host === ''
             // path-abempty (hier and relative)
             // http://www.example.com/my/path
@@ -184,11 +190,11 @@ class HTMLPurifier_URI
                 // path-noscheme (relative)
                 // my/path
                 // (once again, not checking nz)
-                $segment_nc_encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims . '@');
+                $segment_nc_encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims.'@');
                 $c = strpos($this->path, '/');
                 if ($c !== false) {
                     $this->path =
-                        $segment_nc_encoder->encode(substr($this->path, 0, $c)) .
+                        $segment_nc_encoder->encode(substr($this->path, 0, $c)).
                         $segments_encoder->encode(substr($this->path, $c));
                 } else {
                     $this->path = $segment_nc_encoder->encode($this->path);
@@ -200,7 +206,7 @@ class HTMLPurifier_URI
         }
 
         // qf = query and fragment
-        $qf_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/?');
+        $qf_encoder = new HTMLPurifier_PercentEncoder($chars_pchar.'/?');
 
         if (!is_null($this->query)) {
             $this->query = $qf_encoder->encode($this->query);
@@ -209,11 +215,13 @@ class HTMLPurifier_URI
         if (!is_null($this->fragment)) {
             $this->fragment = $qf_encoder->encode($this->fragment);
         }
+
         return true;
     }
 
     /**
-     * Convert URI back to string
+     * Convert URI back to string.
+     *
      * @return string URI appropriate for output
      */
     public function toString()
@@ -226,11 +234,11 @@ class HTMLPurifier_URI
         if (!is_null($this->host)) {
             $authority = '';
             if (!is_null($this->userinfo)) {
-                $authority .= $this->userinfo . '@';
+                $authority .= $this->userinfo.'@';
             }
             $authority .= $this->host;
             if (!is_null($this->port)) {
-                $authority .= ':' . $this->port;
+                $authority .= ':'.$this->port;
             }
         }
 
@@ -242,17 +250,17 @@ class HTMLPurifier_URI
         // defer to the schemes to do the right thing.
         $result = '';
         if (!is_null($this->scheme)) {
-            $result .= $this->scheme . ':';
+            $result .= $this->scheme.':';
         }
         if (!is_null($authority)) {
-            $result .= '//' . $authority;
+            $result .= '//'.$authority;
         }
         $result .= $this->path;
         if (!is_null($this->query)) {
-            $result .= '?' . $this->query;
+            $result .= '?'.$this->query;
         }
         if (!is_null($this->fragment)) {
-            $result .= '#' . $this->fragment;
+            $result .= '#'.$this->fragment;
         }
 
         return $result;
@@ -266,8 +274,10 @@ class HTMLPurifier_URI
      * Note that this does not do any scheme checking, so it is mostly
      * only appropriate for metadata that doesn't care about protocol
      * security.  isBenign is probably what you actually want.
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function isLocal($config, $context)
@@ -279,17 +289,20 @@ class HTMLPurifier_URI
         if ($uri_def->host === $this->host) {
             return true;
         }
+
         return false;
     }
 
     /**
      * Returns true if this URL should be considered a 'benign' URL,
-     * that is:
+     * that is:.
      *
      *      - It is a local URL (isLocal), and
      *      - It has a equal or better level of security
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function isBenign($config, $context)
@@ -309,6 +322,7 @@ class HTMLPurifier_URI
                 return false;
             }
         }
+
         return true;
     }
 }

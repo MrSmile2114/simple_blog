@@ -7,42 +7,47 @@ abstract class HTMLPurifier_Token
 {
     /**
      * Line number node was on in source document. Null if unknown.
-     * @type int
+     *
+     * @var int
      */
     public $line;
 
     /**
      * Column of line node was on in source document. Null if unknown.
-     * @type int
+     *
+     * @var int
      */
     public $col;
 
     /**
      * Lookup array of processing that this token is exempt from.
      * Currently, valid values are "ValidateAttributes" and
-     * "MakeWellFormed_TagClosedError"
-     * @type array
+     * "MakeWellFormed_TagClosedError".
+     *
+     * @var array
      */
-    public $armor = array();
+    public $armor = [];
 
     /**
-     * Used during MakeWellFormed.  See Note [Injector skips]
-     * @type
+     * Used during MakeWellFormed.  See Note [Injector skips].
+     *
+     * @var
      */
     public $skip;
 
     /**
-     * @type
+     * @var
      */
     public $rewind;
 
     /**
-     * @type
+     * @var
      */
     public $carryover;
 
     /**
      * @param string $n
+     *
      * @return null|string
      */
     public function __get($n)
@@ -68,6 +73,7 @@ abstract class HTMLPurifier_Token
 
     /**
      * Sets the position of the token in the source document.
+     *
      * @param int $l
      * @param int $c
      */
@@ -79,6 +85,7 @@ abstract class HTMLPurifier_Token
 
     /**
      * Convenience function for DirectLex settings line/col position.
+     *
      * @param int $l
      * @param int $c
      */

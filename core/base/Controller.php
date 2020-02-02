@@ -1,16 +1,16 @@
 <?php
 
-
 namespace base;
 
 /**
- * Abstract Controller Class
- * @package base
+ * Abstract Controller Class.
  */
-abstract class Controller{
+abstract class Controller
+{
     protected $_view;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->_view = new View();
         $this->_view->setTitle('Title');
         $this->_view->setLayout('main');

@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Pre-transform that changes deprecated name attribute to ID if necessary
+ * Pre-transform that changes deprecated name attribute to ID if necessary.
  */
 class HTMLPurifier_AttrTransform_Name extends HTMLPurifier_AttrTransform
 {
-
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -26,6 +26,7 @@ class HTMLPurifier_AttrTransform_Name extends HTMLPurifier_AttrTransform
             return $attr;
         }
         $attr['id'] = $id;
+
         return $attr;
     }
 }

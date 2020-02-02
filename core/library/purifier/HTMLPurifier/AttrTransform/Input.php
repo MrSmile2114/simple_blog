@@ -7,7 +7,7 @@
 class HTMLPurifier_AttrTransform_Input extends HTMLPurifier_AttrTransform
 {
     /**
-     * @type HTMLPurifier_AttrDef_HTML_Pixels
+     * @var HTMLPurifier_AttrDef_HTML_Pixels
      */
     protected $pixels;
 
@@ -17,9 +17,10 @@ class HTMLPurifier_AttrTransform_Input extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -49,6 +50,7 @@ class HTMLPurifier_AttrTransform_Input extends HTMLPurifier_AttrTransform
         if (!isset($attr['value']) && ($t === 'radio' || $t === 'checkbox')) {
             $attr['value'] = '';
         }
+
         return $attr;
     }
 }

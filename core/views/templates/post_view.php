@@ -1,6 +1,6 @@
 <?php
 $model = $data['model'];
-$id=$model->id;
+$id = $model->id;
 ?>
 <!-- Post Content Column -->
 <div class="card mb-auto">
@@ -9,18 +9,18 @@ $id=$model->id;
         <div class="row">
             <div class="col">
                 <h2 class="card-title">
-                    <?php if($model->categoryId!=1): ?>
+                    <?php if ($model->categoryId != 1) { ?>
                         <span class="badge <?=$model->categoryStyle ?> "><?=$model->categoryName?></span>
-                    <?php endif;?>
+                    <?php }?>
                     <?=$model->title?>
                 </h2>
             </div>
-            <?php if((\library\Auth::getId()==$model->author['id']) or \library\Auth::canAccess('admin')) : ?>
+            <?php if ((\library\Auth::getId() == $model->author['id']) or \library\Auth::canAccess('admin')) { ?>
             <div class="col-auto">
                 <a href="/post/edit/<?=$model->id?>" class="btn btn-dark">Редактировать</a>
                 <a href="/post/delete/<?=$model->id?>" class="btn btn-danger confirmation">Удалить</a>
             </div>
-            <?php endif; ?>
+            <?php } ?>
         </div>
     </div>
     <div class="card-body">
@@ -42,7 +42,7 @@ $id=$model->id;
 <!-- Comments Form -->
 <div class="card my-4">
     <h5 class="card-header">Оставьте комментарий:</h5>
-    <?php if(!\library\Auth::isGuest()): ?>
+    <?php if (!\library\Auth::isGuest()) { ?>
     <div class="card-body" id="addCommentContainer">
         <form method="post" enctype="multipart/form-data" name="addCommentForm" id="addCommentForm" onSubmit="return false">
             <div class="form-group">
@@ -52,11 +52,11 @@ $id=$model->id;
             <button id="submit" type="submit" class="btn btn-dark" onclick="addComment()">Отправить</button>
         </form>
     </div>
-    <?php else:?>
+    <?php } else { ?>
     <div class="card-body" id="addCommentContainer">
         <a href="" data-toggle="modal" data-target="#modalLRForm">Авторизуйтесь</a>, чтобы оставить комментарий.
     </div>
-    <?php endif; ?>
+    <?php } ?>
 </div>
 
 <!-- Single Comment -->
@@ -64,9 +64,9 @@ $id=$model->id;
 <div class="card my-4">
     <h5 class="card-header">Комментарии</h5>
     <div class="card-body" id="commentsBody">
-        <?php foreach ($model->comments as $comment){
-            echo $comment->markup();
-        } ?>
+        <?php foreach ($model->comments as $comment) {
+    echo $comment->markup();
+} ?>
     </div>
 </div>
 <script src="/assets/js/confirmation.js"></script>

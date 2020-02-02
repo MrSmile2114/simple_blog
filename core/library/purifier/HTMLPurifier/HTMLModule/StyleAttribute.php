@@ -7,19 +7,19 @@
 class HTMLPurifier_HTMLModule_StyleAttribute extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'StyleAttribute';
 
     /**
-     * @type array
+     * @var array
      */
-    public $attr_collections = array(
+    public $attr_collections = [
         // The inclusion routine differs from the Abstract Modules but
         // is in line with the DTD and XML Schemas.
-        'Style' => array('style' => false), // see constructor
-        'Core' => array(0 => array('Style'))
-    );
+        'Style' => ['style' => false], // see constructor
+        'Core'  => [0 => ['Style']],
+    ];
 
     /**
      * @param HTMLPurifier_Config $config

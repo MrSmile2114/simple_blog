@@ -1,18 +1,17 @@
 <?php
 
 /**
- * Class for handling width/height length attribute transformations to CSS
+ * Class for handling width/height length attribute transformations to CSS.
  */
 class HTMLPurifier_AttrTransform_Length extends HTMLPurifier_AttrTransform
 {
-
     /**
-     * @type string
+     * @var string
      */
     protected $name;
 
     /**
-     * @type string
+     * @var string
      */
     protected $cssName;
 
@@ -23,9 +22,10 @@ class HTMLPurifier_AttrTransform_Length extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -37,7 +37,8 @@ class HTMLPurifier_AttrTransform_Length extends HTMLPurifier_AttrTransform
         if (ctype_digit($length)) {
             $length .= 'px';
         }
-        $this->prependCSS($attr, $this->cssName . ":$length;");
+        $this->prependCSS($attr, $this->cssName.":$length;");
+
         return $attr;
     }
 }

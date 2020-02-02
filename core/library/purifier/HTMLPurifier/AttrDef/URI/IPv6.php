@@ -2,17 +2,18 @@
 
 /**
  * Validates an IPv6 address.
+ *
  * @author Feyd @ forums.devnetwork.net (public domain)
  * @note This function requires brackets to have been removed from address
  *       in URI.
  */
 class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
 {
-
     /**
-     * @param string $aIP
-     * @param HTMLPurifier_Config $config
+     * @param string               $aIP
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($aIP, $config, $context)
@@ -24,12 +25,12 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
         $original = $aIP;
 
         $hex = '[0-9a-fA-F]';
-        $blk = '(?:' . $hex . '{1,4})';
+        $blk = '(?:'.$hex.'{1,4})';
         $pre = '(?:/(?:12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))'; // /0 - /128
 
         //      prefix check
         if (strpos($aIP, '/') !== false) {
-            if (preg_match('#' . $pre . '$#s', $aIP, $find)) {
+            if (preg_match('#'.$pre.'$#s', $aIP, $find)) {
                 $aIP = substr($aIP, 0, 0 - strlen($find[0]));
                 unset($find);
             } else {
@@ -38,11 +39,11 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
         }
 
         //      IPv4-compatiblity check
-        if (preg_match('#(?<=:' . ')' . $this->ip4 . '$#s', $aIP, $find)) {
+        if (preg_match('#(?<=:'.')'.$this->ip4.'$#s', $aIP, $find)) {
             $aIP = substr($aIP, 0, 0 - strlen($find[0]));
             $ip = explode('.', $find[0]);
             $ip = array_map('dechex', $ip);
-            $aIP .= $ip[0] . $ip[1] . ':' . $ip[2] . $ip[3];
+            $aIP .= $ip[0].$ip[1].':'.$ip[2].$ip[3];
             unset($find, $ip);
         }
 
@@ -82,6 +83,7 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
                 return false;
             }
         }
+
         return $original;
     }
 }

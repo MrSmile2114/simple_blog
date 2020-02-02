@@ -1,6 +1,6 @@
 <?php
-$categories=$data['categories'];
-$users=$data['users']
+$categories = $data['categories'];
+$users = $data['users']
 ?>
 <div class="card">
     <div class="card-body">
@@ -18,13 +18,13 @@ $users=$data['users']
                         <th scope="col">Имя</th>
                     </tr>
                     </thead>
-                    <?php foreach ($categories as $category): ?>
+                    <?php foreach ($categories as $category) { ?>
                         <tr id="cat_<?=$category['id']?>">
                             <td class="active col-auto"><?=$category['id']?></td>
                             <td class="col-8"><span class="badge <?=$category['badge_style']?>"><?=$category['title']?></span></td>
                             <td class="col-1"><button class="btn btn-danger" onclick="deleteCategory(<?=$category['id']?>)">Удалить</button></td>
                         </tr>
-                    <?php endforeach;?>
+                    <?php }?>
                     </tbody>
                 </table>
                 <div id="add_btn"><button class="btn btn-dark" onclick="addCategory()">Добавить</button></div>
@@ -46,7 +46,7 @@ $users=$data['users']
                         <th scope="col">Пол</th>
                     </tr>
                     </thead>
-                    <?php foreach ($users as $user): ?>
+                    <?php foreach ($users as $user) { ?>
                         <tr id="user_<?=$user['id']?>">
                             <td class="col-auto"><?=$user['id']?></td>
                             <td class="col-auto"><img class="rounded-circle" src="/assets/img/avatars/<?=$user['avatar']?>" alt="" height='32' width='32'></td>
@@ -59,7 +59,7 @@ $users=$data['users']
                             <td class="col-auto"><?=$user['sex']?></td>
                             <td class="col-auto"><button class="btn btn-danger" onclick="deleteUser(<?=$user['id']?>)">Удалить</button></td>
                         </tr>
-                    <?php endforeach;?>
+                    <?php }?>
                     </tbody>
                 </table>
             </div>

@@ -3,12 +3,12 @@
 class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy_XHTML';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'medium';
 
@@ -17,8 +17,9 @@ class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
      */
     public function makeFixes()
     {
-        $r = array();
+        $r = [];
         $r['@lang'] = new HTMLPurifier_AttrTransform_Lang();
+
         return $r;
     }
 }

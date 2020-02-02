@@ -2,12 +2,13 @@
 
 /**
  * Module defines proprietary tags and attributes in HTML.
+ *
  * @warning If this module is enabled, standards-compliance is off!
  */
 class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Proprietary';
 
@@ -21,18 +22,18 @@ class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
             'Inline',
             'Flow',
             'Common',
-            array(
-                'direction' => 'Enum#left,right,up,down',
-                'behavior' => 'Enum#alternate',
-                'width' => 'Length',
-                'height' => 'Length',
-                'scrolldelay' => 'Number',
+            [
+                'direction'    => 'Enum#left,right,up,down',
+                'behavior'     => 'Enum#alternate',
+                'width'        => 'Length',
+                'height'       => 'Length',
+                'scrolldelay'  => 'Number',
                 'scrollamount' => 'Number',
-                'loop' => 'Number',
-                'bgcolor' => 'Color',
-                'hspace' => 'Pixels',
-                'vspace' => 'Pixels',
-            )
+                'loop'         => 'Number',
+                'bgcolor'      => 'Color',
+                'hspace'       => 'Pixels',
+                'vspace'       => 'Pixels',
+            ]
         );
     }
 }

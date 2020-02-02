@@ -3,6 +3,7 @@
 /**
  * Structure that stores an HTML element definition. Used by
  * HTMLPurifier_HTMLDefinition and HTMLPurifier_HTMLModule.
+ *
  * @note This class is inspected by HTMLPurifier_Printer_HTMLDefinition.
  *       Please update that class too.
  * @warning If you add new properties to this class, you MUST update
@@ -13,13 +14,15 @@ class HTMLPurifier_ElementDef
     /**
      * Does the definition work by itself, or is it created solely
      * for the purpose of merging into another definition?
-     * @type bool
+     *
+     * @var bool
      */
     public $standalone = true;
 
     /**
      * Associative array of attribute name to HTMLPurifier_AttrDef.
-     * @type array
+     *
+     * @var array
      * @note Before being processed by HTMLPurifier_AttrCollections
      *       when modules are finalized during
      *       HTMLPurifier_HTMLDefinition->setup(), this array may also
@@ -29,7 +32,7 @@ class HTMLPurifier_ElementDef
      *       see HTMLPurifier_AttrTypes on how they are expanded during
      *       HTMLPurifier_HTMLDefinition->setup() processing.
      */
-    public $attr = array();
+    public $attr = [];
 
     // XXX: Design note: currently, it's not possible to override
     // previously defined AttrTransforms without messing around with
@@ -45,39 +48,46 @@ class HTMLPurifier_ElementDef
 
     /**
      * List of tags HTMLPurifier_AttrTransform to be done before validation.
-     * @type array
+     *
+     * @var array
      */
-    public $attr_transform_pre = array();
+    public $attr_transform_pre = [];
 
     /**
      * List of tags HTMLPurifier_AttrTransform to be done after validation.
-     * @type array
+     *
+     * @var array
      */
-    public $attr_transform_post = array();
+    public $attr_transform_post = [];
 
     /**
      * HTMLPurifier_ChildDef of this tag.
-     * @type HTMLPurifier_ChildDef
+     *
+     * @var HTMLPurifier_ChildDef
      */
     public $child;
 
     /**
      * Abstract string representation of internal ChildDef rules.
+     *
      * @see HTMLPurifier_ContentSets for how this is parsed and then transformed
      * into an HTMLPurifier_ChildDef.
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
-     * @type string
+     *
+     * @var string
      */
     public $content_model;
 
     /**
      * Value of $child->type, used to determine which ChildDef to use,
      * used in combination with $content_model.
+     *
      * @warning This must be lowercase
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
-     * @type string
+     *
+     * @var string
      */
     public $content_model_type;
 
@@ -86,20 +96,23 @@ class HTMLPurifier_ElementDef
      * is important for chameleon ins and del processing in
      * HTMLPurifier_ChildDef_Chameleon. Dynamically set: modules don't
      * have to worry about this one.
-     * @type bool
+     *
+     * @var bool
      */
     public $descendants_are_inline = false;
 
     /**
      * List of the names of required attributes this element has.
-     * Dynamically populated by HTMLPurifier_HTMLDefinition::getElement()
-     * @type array
+     * Dynamically populated by HTMLPurifier_HTMLDefinition::getElement().
+     *
+     * @var array
      */
-    public $required_attr = array();
+    public $required_attr = [];
 
     /**
      * Lookup table of tags excluded from all descendants of this tag.
-     * @type array
+     *
+     * @var array
      * @note SGML permits exclusions for all descendants, but this is
      *       not possible with DTDs or XML Schemas. W3C has elected to
      *       use complicated compositions of content_models to simulate
@@ -109,38 +122,42 @@ class HTMLPurifier_ElementDef
      *       Modularization Abstract Modules are blithely unaware of such
      *       distinctions.
      */
-    public $excludes = array();
+    public $excludes = [];
 
     /**
      * This tag is explicitly auto-closed by the following tags.
-     * @type array
+     *
+     * @var array
      */
-    public $autoclose = array();
+    public $autoclose = [];
 
     /**
      * If a foreign element is found in this element, test if it is
      * allowed by this sub-element; if it is, instead of closing the
      * current element, place it inside this element.
-     * @type string
+     *
+     * @var string
      */
     public $wrap;
 
     /**
      * Whether or not this is a formatting element affected by the
      * "Active Formatting Elements" algorithm.
-     * @type bool
+     *
+     * @var bool
      */
     public $formatting;
 
     /**
-     * Low-level factory constructor for creating new standalone element defs
+     * Low-level factory constructor for creating new standalone element defs.
      */
     public static function create($content_model, $content_model_type, $attr)
     {
-        $def = new HTMLPurifier_ElementDef();
+        $def = new self();
         $def->content_model = $content_model;
         $def->content_model_type = $content_model_type;
         $def->attr = $attr;
+
         return $def;
     }
 
@@ -148,6 +165,7 @@ class HTMLPurifier_ElementDef
      * Merges the values of another element definition into this one.
      * Values from the new element def take precedence if a value is
      * not mergeable.
+     *
      * @param HTMLPurifier_ElementDef $def
      */
     public function mergeIn($def)
@@ -176,7 +194,7 @@ class HTMLPurifier_ElementDef
 
         if (!empty($def->content_model)) {
             $this->content_model =
-                str_replace("#SUPER", $this->content_model, $def->content_model);
+                str_replace('#SUPER', $this->content_model, $def->content_model);
             $this->child = false;
         }
         if (!empty($def->content_model_type)) {
@@ -195,7 +213,8 @@ class HTMLPurifier_ElementDef
     }
 
     /**
-     * Merges one array into another, removes values which equal false
+     * Merges one array into another, removes values which equal false.
+     *
      * @param $a1 Array by reference that is merged into
      * @param $a2 Array that merges into $a1
      */

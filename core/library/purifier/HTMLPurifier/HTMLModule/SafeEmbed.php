@@ -6,7 +6,7 @@
 class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLPurifier_HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeEmbed';
 
@@ -21,17 +21,17 @@ class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLPurifier_HTMLModule
             'Inline',
             'Empty',
             'Common',
-            array(
-                'src*' => 'URI#embedded',
-                'type' => 'Enum#application/x-shockwave-flash',
-                'width' => 'Pixels#' . $max,
-                'height' => 'Pixels#' . $max,
+            [
+                'src*'              => 'URI#embedded',
+                'type'              => 'Enum#application/x-shockwave-flash',
+                'width'             => 'Pixels#'.$max,
+                'height'            => 'Pixels#'.$max,
                 'allowscriptaccess' => 'Enum#never',
-                'allownetworking' => 'Enum#internal',
-                'flashvars' => 'Text',
-                'wmode' => 'Enum#window,transparent,opaque',
-                'name' => 'ID',
-            )
+                'allownetworking'   => 'Enum#internal',
+                'flashvars'         => 'Text',
+                'wmode'             => 'Enum#window,transparent,opaque',
+                'name'              => 'ID',
+            ]
         );
         $embed->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeEmbed();
     }

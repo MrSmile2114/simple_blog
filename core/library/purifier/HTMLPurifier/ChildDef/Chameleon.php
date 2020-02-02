@@ -11,27 +11,28 @@
  */
 class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
 {
-
     /**
      * Instance of the definition object to use when inline. Usually stricter.
-     * @type HTMLPurifier_ChildDef_Optional
+     *
+     * @var HTMLPurifier_ChildDef_Optional
      */
     public $inline;
 
     /**
      * Instance of the definition object to use when block.
-     * @type HTMLPurifier_ChildDef_Optional
+     *
+     * @var HTMLPurifier_ChildDef_Optional
      */
     public $block;
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'chameleon';
 
     /**
      * @param array $inline List of elements to allow when inline.
-     * @param array $block List of elements to allow when block.
+     * @param array $block  List of elements to allow when block.
      */
     public function __construct($inline, $block)
     {
@@ -41,9 +42,10 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @param HTMLPurifier_Node[] $children
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Node[]  $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function validateChildren($children, $config, $context)

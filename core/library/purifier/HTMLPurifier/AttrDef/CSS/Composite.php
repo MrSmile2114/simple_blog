@@ -11,10 +11,11 @@
  */
 class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
 {
-
     /**
      * List of objects that may process strings.
-     * @type HTMLPurifier_AttrDef[]
+     *
+     * @var HTMLPurifier_AttrDef[]
+     *
      * @todo Make protected
      */
     public $defs;
@@ -28,9 +29,10 @@ class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -41,6 +43,7 @@ class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
                 return $result;
             }
         }
+
         return false;
     }
 }

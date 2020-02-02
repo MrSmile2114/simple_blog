@@ -1,9 +1,9 @@
     <?php
     $isGuest = \library\Auth::isGuest();
     $categories = \models\Category::getAllCategories();
-    $arr_categories=array_chunk($categories, ceil(count($categories)/2));
+    $arr_categories = array_chunk($categories, ceil(count($categories) / 2));
 
-    require_once "header.php";
+    require_once 'header.php';
     ?>
 
     <div class="container">
@@ -35,19 +35,19 @@
                     <h5 class="card-header">Категории</h5>
                     <div class="card-body">
                         <div class="row">
-                            <?php foreach ($arr_categories as $categories): ?>
+                            <?php foreach ($arr_categories as $categories) { ?>
                                 <div class="col-lg-6">
                                     <ul class="list-unstyled mb-0">
-                                        <?php foreach ($categories as $category): ?>
+                                        <?php foreach ($categories as $category) { ?>
                                             <li>
                                                 <a href="/posts/search/?q=<?=$category['title']?>&type=category">
                                                     <?=$category['title']?>
                                                 </a>
                                             </li>
-                                        <?php endforeach; ?>
+                                        <?php } ?>
                                     </ul>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -66,4 +66,4 @@
     </div>
 
     <!-- Footer -->
-    <?php require_once "footer.php"?>
+    <?php require_once 'footer.php'?>

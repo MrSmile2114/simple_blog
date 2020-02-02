@@ -1,8 +1,6 @@
 <?php
 
-
 namespace controllers;
-
 
 use base\Controller;
 use library\Auth;
@@ -10,17 +8,14 @@ use library\HttpException;
 use library\Request;
 use library\Url;
 use models\Avatar;
-use models\Comment;
 use models\User;
 
 class ControllerUser extends Controller
 {
-
-
     public function actionIndex()
     {
         if (!Auth::isGuest()) {
-            header("Location: /user/view/" . Auth::getId());
+            header('Location: /user/view/'.Auth::getId());
         } else {
             throw new HttpException('Forbidden', 403);
         }
@@ -40,7 +35,8 @@ class ControllerUser extends Controller
         $this->_view->render('user_view', ['model' => $model]);
     }
 
-    public function actionAvatarSet(){
+    public function actionAvatarSet()
+    {
         if (!Auth::isGuest()) {
             //todo: изменить вместе с UrlRules!
             $id = Url::getSegment(2);
@@ -51,30 +47,32 @@ class ControllerUser extends Controller
             $model = new User($id);
             if (($model->id == Auth::getId()) or (Auth::getRole() == 'admin')) {
                 if (Request::isPost()) {
-                    $avatarModel= new Avatar($model);
-                    if($avatarModel->set()){
-                        header("Location: /user/view/".$model->id);
+                    $avatarModel = new Avatar($model);
+                    if ($avatarModel->set()) {
+                        header('Location: /user/view/'.$model->id);
+
                         return true;
-                    }else{
+                    } else {
                         $this->_view->setTitle($model->login);
                         $this->_view->setLayout('main');
                         $model->addErrors($avatarModel->getLocalizedErrors('ru'));
                         $this->_view->render('user_view', ['model' => $model]);
+
                         return false;
                     }
-
                 } else {
                     throw new HttpException('Forbidden', 403);
                 }
             } else {
                 throw new HttpException('Forbidden', 403);
             }
-        }else {
+        } else {
             throw new HttpException('Forbidden', 403);
         }
     }
 
-    public function actionAvatarDelete(){
+    public function actionAvatarDelete()
+    {
         if (!Auth::isGuest()) {
             //todo: изменить вместе с UrlRules!
             $id = Url::getSegment(2);
@@ -84,20 +82,22 @@ class ControllerUser extends Controller
             }
             $model = new User($id);
             if (($model->id == Auth::getId()) or (Auth::getRole() == 'admin')) {
-                $avatarModel= new Avatar($model);
-                if($avatarModel->delete()){
-                    header("Location: /user/view/".$model->id);
+                $avatarModel = new Avatar($model);
+                if ($avatarModel->delete()) {
+                    header('Location: /user/view/'.$model->id);
+
                     return true;
                 }
             } else {
                 throw new HttpException('Forbidden', 403);
             }
-        }else {
+        } else {
             throw new HttpException('Forbidden', 403);
         }
     }
 
-    public function actionPasswordUpdate(){
+    public function actionPasswordUpdate()
+    {
         if (!Auth::isGuest()) {
             //todo: изменить вместе с UrlRules!
             $id = Url::getSegment(2);
@@ -108,27 +108,28 @@ class ControllerUser extends Controller
             $model = new User($id);
             if (($model->id == Auth::getId())) {
                 if (Request::isPost()) {
-                    if ($model->load(Request::getPost()) and $model->validate()){
-                        if($model->updatePassword()){
+                    if ($model->load(Request::getPost()) and $model->validate()) {
+                        if ($model->updatePassword()) {
                             echo json_encode(['status' => 1, 'message'=> 'Пароль успешно изменен']);
-                        }else{
+                        } else {
                             echo json_encode(['status' => 0, 'errors'=> $model->getLocalizedErrors('ru')]);
                         }
-                    }else{
+                    } else {
                         echo json_encode(['status' => 0, 'errors'=> $model->getLocalizedErrors('ru')]);
                     }
-                }else{
+                } else {
                     throw new HttpException('Not Found', 404);
                 }
             } else {
                 throw new HttpException('Forbidden', 403);
             }
-        }else {
+        } else {
             throw new HttpException('Forbidden', 403);
         }
     }
 
-    public function actionInfoUpdate(){
+    public function actionInfoUpdate()
+    {
         if (!Auth::isGuest()) {
             //todo: изменить вместе с UrlRules!
             $id = Url::getSegment(2);
@@ -139,24 +140,23 @@ class ControllerUser extends Controller
             $model = new User($id);
             if (($model->id == Auth::getId()) or (Auth::getRole() == 'admin')) {
                 if (Request::isPost()) {
-                    if ($model->load(Request::getPost()) and $model->validate()){
-                        if($model->updateInfo($id)){
+                    if ($model->load(Request::getPost()) and $model->validate()) {
+                        if ($model->updateInfo($id)) {
                             echo json_encode(['status' => 1, 'message'=> 'Изменения сохранены']);
-                        }else{
+                        } else {
                             echo json_encode(['status' => 0, 'errors'=> $model->getLocalizedErrors('ru')]);
                         }
-                    }else{
+                    } else {
                         echo json_encode(['status' => 0, 'errors'=> $model->getLocalizedErrors('ru')]);
                     }
-                }else{
+                } else {
                     throw new HttpException('Not Found', 404);
                 }
             } else {
                 throw new HttpException('Forbidden', 403);
             }
-        }else {
+        } else {
             throw new HttpException('Forbidden', 403);
         }
     }
-
 }

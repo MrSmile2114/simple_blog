@@ -3,12 +3,12 @@
 class HTMLPurifier_HTMLModule_Tidy_Transitional extends HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy_Transitional';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'heavy';
 }

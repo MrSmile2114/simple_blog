@@ -1,8 +1,6 @@
 <?php
 
-
 namespace controllers;
-
 
 use base\Controller;
 use library\Auth;
@@ -14,7 +12,6 @@ use models\Post;
 
 class ControllerPost extends Controller
 {
-
     public function actionIndex()
     {
         header('Location: /');
@@ -33,17 +30,17 @@ class ControllerPost extends Controller
         $this->_view->addJs(['comment.js']);
         $this->_view->setLayout('main');
         $this->_view->render('post_view', ['model' => $model]);
-
     }
 
-    public function actionCreate(){
+    public function actionCreate()
+    {
         if (!Auth::isGuest()) {
             $model = new Post();
             if (Request::isPost()) {
                 //load the data into the model and check it
                 if ($model->load(Request::getPost()) and $model->validate()) {
                     if ($model->create()) {
-                        header('Location: /post/view/' . $model->id);
+                        header('Location: /post/view/'.$model->id);
                     }
                 }
             }
@@ -57,7 +54,8 @@ class ControllerPost extends Controller
         }
     }
 
-    public function actionEdit(){
+    public function actionEdit()
+    {
         if (!Auth::isGuest()) {
             //todo: изменить вместе с UrlRules!
             $postId = Url::getSegment(2);
@@ -69,14 +67,14 @@ class ControllerPost extends Controller
             if (($model->author['id'] == Auth::getId()) or (Auth::getRole() == 'admin')) {
                 if (Request::isPost()) {
                     //we must clean up before mysql_real_escape_string :C
-                    require_once __DIR__."/../library/purifier/HTMLPurifier.auto.php";
+                    require_once __DIR__.'/../library/purifier/HTMLPurifier.auto.php';
                     $cfg = \HTMLPurifier_Config::createDefault();
                     $purifier = new \HTMLPurifier($cfg);
-                    Request::setPostParam('content',$purifier->purify(Request::getPostParam('content')));
+                    Request::setPostParam('content', $purifier->purify(Request::getPostParam('content')));
                     //load the data into the model and check it
                     if ($model->load(Request::getPost()) and $model->validate()) {
                         if ($model->update()) {
-                            header('Location: /post/view/' . $model->id);
+                            header('Location: /post/view/'.$model->id);
                         }
                     }
                 }
@@ -93,23 +91,24 @@ class ControllerPost extends Controller
         }
     }
 
-    public function actionDelete(){
+    public function actionDelete()
+    {
         if (!Auth::isGuest()) {
             //todo: изменить вместе с UrlRules!
-            $postId= Url::getSegment(2);
+            $postId = Url::getSegment(2);
             //---------------------------------
             if (empty($postId) or !(is_numeric($postId))) {
                 return false;
             }
             $model = new Post($postId);
             if (($model->author['id'] == Auth::getId()) or (Auth::getRole() == 'admin')) {
-                if($model->delete()){
+                if ($model->delete()) {
                     header('Location: /');
                 }
-            }else{
+            } else {
                 throw new HttpException('Forbidden', 403);
             }
-        }else {
+        } else {
             throw new HttpException('Forbidden', 403);
         }
     }

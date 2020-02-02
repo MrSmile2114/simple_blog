@@ -7,28 +7,28 @@
  */
 class HTMLPurifier_AttrValidator
 {
-
     /**
      * Validates the attributes of a token, mutating it as necessary.
-     * that has valid tokens
-     * @param HTMLPurifier_Token $token Token to validate.
-     * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
+     * that has valid tokens.
+     *
+     * @param HTMLPurifier_Token   $token   Token to validate.
+     * @param HTMLPurifier_Config  $config  Instance of HTMLPurifier_Config
      * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
      */
     public function validateToken($token, $config, $context)
     {
         $definition = $config->getHTMLDefinition();
-        $e =& $context->get('ErrorCollector', true);
+        $e = &$context->get('ErrorCollector', true);
 
         // initialize IDAccumulator if necessary
-        $ok =& $context->get('IDAccumulator', true);
+        $ok = &$context->get('IDAccumulator', true);
         if (!$ok) {
             $id_accumulator = HTMLPurifier_IDAccumulator::build($config, $context);
             $context->register('IDAccumulator', $id_accumulator);
         }
 
         // initialize CurrentToken if necessary
-        $current_token =& $context->get('CurrentToken', true);
+        $current_token = &$context->get('CurrentToken', true);
         if (!$current_token) {
             $context->register('CurrentToken', $token);
         }
@@ -169,10 +169,7 @@ class HTMLPurifier_AttrValidator
         if (!$current_token) {
             $context->destroy('CurrentToken');
         }
-
     }
-
-
 }
 
 // vim: et sw=4 sts=4

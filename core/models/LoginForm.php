@@ -1,44 +1,47 @@
 <?php
 
-
 namespace models;
-
 
 use base\BaseForm;
 use library\Auth;
 
-class LoginForm extends BaseForm{
+class LoginForm extends BaseForm
+{
     public $login;
     public $password;
 
     protected $_tableName = 'user';
 
-    public function getRules(){
+    public function getRules()
+    {
         return [
-            'login' => ['requiredFill', 'login'],
-            'password' => ['requiredFill', 'password']
+            'login'    => ['requiredFill', 'login'],
+            'password' => ['requiredFill', 'password'],
         ];
     }
 
-    public function login(){
+    public function login()
+    {
         $login = $this->login;
         $password = $this->password;
-        $sql="SELECT id, password, role, avatar FROM `user` WHERE login='{$login}'";
+        $sql = "SELECT id, password, role, avatar FROM `user` WHERE login='{$login}'";
         $res = $this->_db->sendQuery($sql);
-        if($res->num_rows === 0){
-            $this->_errors['login_error'] ='incorrect';
+        if ($res->num_rows === 0) {
+            $this->_errors['login_error'] = 'incorrect';
+
             return false;
-        }else{
-            $user=$res->fetch_assoc();
-            $true_hash=$user['password'];
-            if (password_verify($password, $true_hash)){
+        } else {
+            $user = $res->fetch_assoc();
+            $true_hash = $user['password'];
+            if (password_verify($password, $true_hash)) {
                 Auth::login($user['id'], $login, $user['role'], $user['avatar']);
+
                 return true;
-            }else{
-                $this->_errors['login_error'] ='incorrect';
+            } else {
+                $this->_errors['login_error'] = 'incorrect';
+
                 return false;
             }
         }
-
     }
 }

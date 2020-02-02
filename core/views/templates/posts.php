@@ -1,6 +1,6 @@
 <?php
 $model = $data['model'];
-$postData=$model->postsData;
+$postData = $model->postsData;
 ?>
 <!-- Blog Entries Column -->
     <div class="col-md-8">
@@ -9,13 +9,13 @@ $postData=$model->postsData;
             <small><?=$model->postsTitle ?></small>
         </h1>
         <!-- Blog Post -->
-        <?php foreach($postData as $post):?>
+        <?php foreach ($postData as $post) { ?>
         <div class="card mb-4">
             <div class="card-body">
                 <h2 class="card-title">
-                    <?php if($post['category_id']!=1): ?>
+                    <?php if ($post['category_id'] != 1) { ?>
                         <small><span class="badge <?=$post['badge_style'] ?> "><?=$post['category_name']?></span></small>
-                    <?php endif;?>
+                    <?php }?>
                     <?=$post['title']?>
                 </h2>
                 <p class="card-text"><?=$post['content']?></p>
@@ -33,29 +33,29 @@ $postData=$model->postsData;
                     </div>
                 </div>
         </div>
-        <?php endforeach; ?>
+        <?php } ?>
 
         <!-- Pagination -->
         <ul class="pagination justify-content-center mb-4">
-            <?php if (!is_null($model->prevPageLink)):?>
+            <?php if (!is_null($model->prevPageLink)) { ?>
             <li class="page-item">
                 <a class="page-link" href="<?=$model->prevPageLink?>">&larr; Предыдущая страница</a>
             </li>
-            <?php else: ?>
+            <?php } else { ?>
             <li class="page-item disabled">
                 <a class="page-link" href="#">&larr; Предыдущая страница</a>
             </li>
-            <?php endif; ?>
+            <?php } ?>
 
-            <?php if (!is_null($model->nextPageLink)):?>
+            <?php if (!is_null($model->nextPageLink)) { ?>
             <li class="page-item">
                 <a class="page-link" href="<?=$model->nextPageLink?>">Следующая страница &rarr;</a>
             </li>
-            <?php else: ?>
+            <?php } else { ?>
             <li class="page-item disabled">
                 <a class="page-link" href="#">Следующая страница &rarr;</a>
             </li>
-            <?php endif; ?>
+            <?php } ?>
 
         </ul>
 

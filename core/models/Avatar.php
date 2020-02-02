@@ -1,23 +1,22 @@
 <?php
 
-
 namespace models;
-
 
 use base\BaseModel;
 use library\Auth;
 
-class Avatar extends BaseModel{
+class Avatar extends BaseModel
+{
     /**
      * @var User
      */
     public $userModel;
 
-    static $limitBytes  = 1024 * 1024 * 5;
-    static $limitWidth  = 512;
-    static $limitHeight = 512;
+    public static $limitBytes = 1024 * 1024 * 5;
+    public static $limitWidth = 512;
+    public static $limitHeight = 512;
 
-    static $errorCodeMessages = [
+    public static $errorCodeMessages = [
         UPLOAD_ERR_INI_SIZE     => 'Размер файла превысил значение 5 Мбайт.',
         UPLOAD_ERR_FORM_SIZE    => 'Размер загружаемого файла превысил значение MAX_FILE_SIZE в HTML-форме.',
         UPLOAD_ERR_PARTIAL      => 'Загружаемый файл был получен только частично.',
@@ -26,92 +25,108 @@ class Avatar extends BaseModel{
         UPLOAD_ERR_CANT_WRITE   => 'Не удалось записать файл на диск.',
         UPLOAD_ERR_EXTENSION    => 'PHP-расширение остановило загрузку файла.',
     ];
-    static $errorMessages =[
+    public static $errorMessages = [
         'unknown'       => 'При загрузке файла произошла неизвестная ошибка.',
         'not_image'     => 'Можно загружать только изображения.',
         'wrong_width'   => 'Ширина изображения не должна превышать 512 точек.',
         'wrong_height'  => 'Высота изображения не должна превышать 512 точек.',
         'wrong_size'    => 'Размер изображения не должен превышать 5 Мбайт.',
-        'write_error'   => 'Ошибка при записи файла на диск'
+        'write_error'   => 'Ошибка при записи файла на диск',
     ];
 
     /**
      * Avatar constructor.
+     *
      * @param $userModel User
      */
-    public function __construct($userModel){
+    public function __construct($userModel)
+    {
         parent::__construct();
-        $this->userModel=$userModel;
+        $this->userModel = $userModel;
     }
 
-    public function set(){
+    public function set()
+    {
         $filePath = $_FILES['upload']['tmp_name'];
         $errorCode = $_FILES['upload']['error'];
 
         //Checking successful download:
         if ($errorCode !== UPLOAD_ERR_OK || !is_uploaded_file($filePath)) {
-            $outputMessage = isset($errorMessages[$errorCode]) ? Avatar::$errorCodeMessages[$errorCode] : Avatar::$errorMessages['unknown'];
-            $this->_errors [] = $outputMessage;
+            $outputMessage = isset($errorMessages[$errorCode]) ? self::$errorCodeMessages[$errorCode] : self::$errorMessages['unknown'];
+            $this->_errors[] = $outputMessage;
+
             return false;
         }
 
         //File Type Check:
         $fi = finfo_open(FILEINFO_MIME_TYPE);
         $mime = (string) finfo_file($fi, $filePath);
-            // Check the keyword image (image/jpeg, image/png, etc.):
+        // Check the keyword image (image/jpeg, image/png, etc.):
         if (strpos($mime, 'image') === false) {
-            $this->_errors [] = Avatar::$errorMessages['not_image'];
+            $this->_errors[] = self::$errorMessages['not_image'];
+
             return false;
         }
 
         //Check image parameters:
         $image = getimagesize($filePath);
-        if (filesize($filePath) > Avatar::$limitBytes)  $this->_errors [] = Avatar::$errorMessages['wrong_size'];
-        if ($image[1] > Avatar::$limitHeight)           $this->_errors [] = Avatar::$errorMessages['wrong_height'];
-        if ($image[0] > Avatar::$limitWidth)            $this->_errors [] = Avatar::$errorMessages['wrong_width'];
-        if(!empty($this->_errors)){
+        if (filesize($filePath) > self::$limitBytes) {
+            $this->_errors[] = self::$errorMessages['wrong_size'];
+        }
+        if ($image[1] > self::$limitHeight) {
+            $this->_errors[] = self::$errorMessages['wrong_height'];
+        }
+        if ($image[0] > self::$limitWidth) {
+            $this->_errors[] = self::$errorMessages['wrong_width'];
+        }
+        if (!empty($this->_errors)) {
             return false;
         }
 
-        $name = md5_file($filePath);//prevent sql injections
+        $name = md5_file($filePath); //prevent sql injections
 
         $extension = image_type_to_extension($image[2]);
         $format = str_replace('jpeg', 'jpg', $extension);
 
-        if($this->userModel->avatarPath != "/assets/img/avatars/unknown.png"){
-            if(!unlink(__DIR__.'/../../'.$this->userModel->avatarPath)){
-                $this->_errors [] = Avatar::$errorMessages['write_error'];
+        if ($this->userModel->avatarPath != '/assets/img/avatars/unknown.png') {
+            if (!unlink(__DIR__.'/../../'.$this->userModel->avatarPath)) {
+                $this->_errors[] = self::$errorMessages['write_error'];
+
                 return false;
             }
         }
 
-        $fileName=$name.$format;
-        $newPath='/assets/img/avatars/'.$fileName;
-        $newPathFile=__DIR__.'/../../'.$newPath;
+        $fileName = $name.$format;
+        $newPath = '/assets/img/avatars/'.$fileName;
+        $newPathFile = __DIR__.'/../../'.$newPath;
 
         if (!move_uploaded_file($filePath, $newPathFile)) {
-            $this->_errors [] = Avatar::$errorMessages['write_error'];
+            $this->_errors[] = self::$errorMessages['write_error'];
+
             return false;
         }
 
-        $sql="UPDATE user SET avatar='{$fileName}' WHERE id={$this->userModel->id}";
+        $sql = "UPDATE user SET avatar='{$fileName}' WHERE id={$this->userModel->id}";
         $this->_db->sendQuery($sql);
 
-        $this->userModel->avatarPath=$newPath;
+        $this->userModel->avatarPath = $newPath;
         Auth::setAvatar($fileName);
+
         return true;
     }
 
-
-    public function delete(){
-        if($this->userModel->avatarPath!="/assets/img/avatars/unknown.png"){
-            if(unlink(__DIR__.'/../../'.$this->userModel->avatarPath)){
-                $sql="UPDATE user SET avatar='unknown.png' WHERE id={$this->userModel->id}";
+    public function delete()
+    {
+        if ($this->userModel->avatarPath != '/assets/img/avatars/unknown.png') {
+            if (unlink(__DIR__.'/../../'.$this->userModel->avatarPath)) {
+                $sql = "UPDATE user SET avatar='unknown.png' WHERE id={$this->userModel->id}";
                 $this->_db->sendQuery($sql);
                 Auth::setAvatar('unknown.png');
+
                 return true;
             }
         }
+
         return false;
     }
 }

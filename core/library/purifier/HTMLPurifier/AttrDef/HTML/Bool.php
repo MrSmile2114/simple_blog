@@ -1,18 +1,17 @@
 <?php
 
 /**
- * Validates a boolean attribute
+ * Validates a boolean attribute.
  */
 class HTMLPurifier_AttrDef_HTML_Bool extends HTMLPurifier_AttrDef
 {
-
     /**
-     * @type bool
+     * @var bool
      */
     protected $name;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $minimized = true;
 
@@ -25,9 +24,10 @@ class HTMLPurifier_AttrDef_HTML_Bool extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -37,11 +37,12 @@ class HTMLPurifier_AttrDef_HTML_Bool extends HTMLPurifier_AttrDef
 
     /**
      * @param string $string Name of attribute
+     *
      * @return HTMLPurifier_AttrDef_HTML_Bool
      */
     public function make($string)
     {
-        return new HTMLPurifier_AttrDef_HTML_Bool($string);
+        return new self($string);
     }
 }
 

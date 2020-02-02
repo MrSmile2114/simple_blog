@@ -2,18 +2,18 @@
 
 /**
  * Validates a URI as defined by RFC 3986.
+ *
  * @note Scheme-specific mechanics deferred to HTMLPurifier_URIScheme
  */
 class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 {
-
     /**
-     * @type HTMLPurifier_URIParser
+     * @var HTMLPurifier_URIParser
      */
     protected $parser;
 
     /**
-     * @type bool
+     * @var bool
      */
     protected $embedsResource;
 
@@ -23,23 +23,26 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
     public function __construct($embeds_resource = false)
     {
         $this->parser = new HTMLPurifier_URIParser();
-        $this->embedsResource = (bool)$embeds_resource;
+        $this->embedsResource = (bool) $embeds_resource;
     }
 
     /**
      * @param string $string
+     *
      * @return HTMLPurifier_AttrDef_URI
      */
     public function make($string)
     {
         $embeds = ($string === 'embedded');
-        return new HTMLPurifier_AttrDef_URI($embeds);
+
+        return new self($embeds);
     }
 
     /**
-     * @param string $uri
-     * @param HTMLPurifier_Config $config
+     * @param string               $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($uri, $config, $context)
@@ -96,7 +99,6 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 
             // survived gauntlet
             $ok = true;
-
         } while (false);
 
         $context->destroy('EmbeddedURI');

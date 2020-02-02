@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Custom validation class, accepts DTD child definitions
+ * Custom validation class, accepts DTD child definitions.
  *
  * @warning Currently this class is an all or nothing proposition, that is,
  *          it will only give a bool return value.
@@ -9,24 +9,26 @@
 class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
 {
     /**
-     * @type string
+     * @var string
      */
     public $type = 'custom';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $allow_empty = false;
 
     /**
      * Allowed child pattern as defined by the DTD.
-     * @type string
+     *
+     * @var string
      */
     public $dtd_regex;
 
     /**
      * PCRE regex derived from $dtd_regex.
-     * @type string
+     *
+     * @var string
      */
     private $_pcre_regex;
 
@@ -40,12 +42,12 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
     }
 
     /**
-     * Compiles the PCRE regex from a DTD regex ($dtd_regex to $_pcre_regex)
+     * Compiles the PCRE regex from a DTD regex ($dtd_regex to $_pcre_regex).
      */
     protected function _compileRegex()
     {
         $raw = str_replace(' ', '', $this->dtd_regex);
-        if ($raw{0} != '(') {
+        if ($raw[0] != '(') {
             $raw = "($raw)";
         }
         $el = '[#a-zA-Z0-9_.-]+';
@@ -73,9 +75,10 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @param HTMLPurifier_Node[] $children
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Node[]  $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
     public function validateChildren($children, $config, $context)
@@ -86,16 +89,17 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
             if (!empty($node->is_whitespace)) {
                 continue;
             }
-            $list_of_children .= $node->name . ',';
+            $list_of_children .= $node->name.',';
         }
         // add leading comma to deal with stray comma declarations
-        $list_of_children = ',' . rtrim($list_of_children, ',');
+        $list_of_children = ','.rtrim($list_of_children, ',');
         $okay =
             preg_match(
-                '/^,?' . $this->_pcre_regex . '$/',
+                '/^,?'.$this->_pcre_regex.'$/',
                 $list_of_children
             );
-        return (bool)$okay;
+
+        return (bool) $okay;
     }
 }
 

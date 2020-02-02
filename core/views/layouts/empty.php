@@ -1,6 +1,5 @@
 <?php
 
-
 ?>
 <head>
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -27,14 +26,14 @@
     <script src="/assets/js/bootstrap.min.js"></script>
 
     <!--custom page JavaScript -->
-    <?php foreach ($this->js as $js): ?>
+    <?php foreach ($this->js as $js) { ?>
         <script src="/assets/js/<?=$js?>"></script>
-    <?php endforeach; ?>
+    <?php } ?>
 
     <!--custom page CSS -->
-    <?php foreach ($this->css as $css): ?>
+    <?php foreach ($this->css as $css) { ?>
         <link href="/assets/css/<?=$css?>" rel="stylesheet">
-    <?php endforeach; ?>
+    <?php } ?>
 
 
 
@@ -45,5 +44,5 @@
 </div>
 </body>
 <!-- Footer -->
-<?php require_once "footer.php"?>
+<?php require_once 'footer.php'?>
 

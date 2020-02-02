@@ -5,9 +5,8 @@
  */
 class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
 {
-
     /**
-     * @type int
+     * @var int
      */
     protected $max;
 
@@ -20,9 +19,10 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -41,7 +41,7 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         if (!is_numeric($string)) {
             return false;
         }
-        $int = (int)$string;
+        $int = (int) $string;
 
         if ($int < 0) {
             return '0';
@@ -52,13 +52,15 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         // WARNING, above link WILL crash you if you're using Windows
 
         if ($this->max !== null && $int > $this->max) {
-            return (string)$this->max;
+            return (string) $this->max;
         }
-        return (string)$int;
+
+        return (string) $int;
     }
 
     /**
      * @param string $string
+     *
      * @return HTMLPurifier_AttrDef
      */
     public function make($string)
@@ -66,9 +68,10 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         if ($string === '') {
             $max = null;
         } else {
-            $max = (int)$string;
+            $max = (int) $string;
         }
         $class = get_class($this);
+
         return new $class($max);
     }
 }
